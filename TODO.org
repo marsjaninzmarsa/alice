@@ -50,6 +50,24 @@ Just a helpul list so I don't forget ideas and concepts.
 
    Not having to match strings 1:1 would be more flexible.
 
+
+** Tracking identities
+   Here's a concept for identity tracking.
+   - whenever Alice sees a nick she never saw before, she creates a person entry for it
+   - whenever that new person changes the nickname, Alice adds the nickname to the list of that person's aliases
+   - sometimes there will be collisions, multiple people assuming the same nick for variety of reasons, probably mostly trolling
+   - that's why Alice will remember the number of times she saw a particular alias for a particular person
+   - whenever there are 2 or more people with the same aliases, Alice will be in "identity collision mode"
+   - collisions can be resolved interactively both via REPL and IRC talks
+   - Alice will ask whether [alias] belongs to (list of persons)
+   - after the answer from a trusted party Alice will resolve collision by removing the alias from other people
+
+   Potential problem: while the above method is good for long-term memory, it will be invalid for runtime
+   operations; i.e. if person B pretends to be person A by changing nick to A' while Alice sees it, she should
+   remember the B->A' trail and resolve A' to person B.
+
+   Meh, this needs more thinking.
+
 * Sketchpad
   #+BEGIN_SRC lisp
     (add-rule :type :public

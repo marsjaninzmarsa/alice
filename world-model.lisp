@@ -30,6 +30,10 @@
 (defun part-channel (channel)
   (irc:part *connection* channel)
   (setf *connected-channels* (remove-if (lambda (x) (string= x channel)) *connected-channels*)))
+
+;;; ================================================================
+;;; vvv              DEFINITELY UNDER CONSTRUCTION!              vvv
+;;; ================================================================
   
 ;; people tracking
 (defclass person ()
@@ -56,6 +60,18 @@ Creates the object if not found."
     (setf (slot-value new-guy 'irc-names) (list nickname))
     new-guy))
 
+(defun find-people-by-nick (nick)
+  nil)
+
+(defun make-and-store-person (&key nickname)
+  nil)
+
+(defun add-person-ircname (person ircname)
+  nil)
 
 (defun register-nick-change (from to)
-  nil)
+  (let* ((in-memory (find-people-by-nick from))
+         (culprits (if in-memory in-memory (make-and-store-person :nickname from))))
+    (map nil (lambda (person)
+               (add-person-ircname person to))
+         culprits)))
