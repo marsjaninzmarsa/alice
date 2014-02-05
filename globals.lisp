@@ -38,7 +38,7 @@
                       "Alice Margatroid, the Seven-Colored Puppeteer."
                       "Pozornie Zapracowana Youkai, Alice Margatroid."))
 
-    (:version . "0.0.34a. (The Girl Who Shortened Some Stuff)")
+    (:version . "0.0.35. (The Girl Who Almost Wrote Things Down)")
 
     (:smiles . (":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ; yeah, a cheap trick to fake probability distribution
                 ";)" ";)" ";)"";)" ";)" ";)"
@@ -94,6 +94,10 @@
                              "Nie dzisiaj."
                              "Nope. Może następnym razem."
                              "Zawsze masz takie dziwne wymagania?"))
+
+    (:already-shortened . ("To już było."
+                           "URL już był skrócony."
+                           "Byyyło."))
 
     (:nothing-to-shorten . #(("Jak mi nie powiesz co, to nic nie skrócę."
                               "Ta, a niby co?"

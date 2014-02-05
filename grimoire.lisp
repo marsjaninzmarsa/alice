@@ -1,16 +1,28 @@
 ;;;; Alice's Grimoire, the source of her more powerful magic.
 (in-package #:alice)
 
+;; data
+(defun find-shortened-url (url)
+  nil)
+
+(defun save-shortened-url (url)
+  url)
+
+;; magic
+
 (defun do-google-search (query)
   (declare (ignore query))
   )
 
 (defun shorten-url (url)
   (if url
-      (drakma::http-request "http://tinyurl.com/api-create.php"
-                            :external-format-out :UTF-8
-                            :parameters `(("url" . ,url)))
-      :nothing-to-shorten))
+      (let ((saved-url (find-shortened-url url)))
+        (if saved-url
+            (list :already-shortened saved-url)
+            (save-shortened-url (drakma::http-request "http://tinyurl.com/api-create.php"
+                                                      :external-format-out :UTF-8
+                                                      :parameters `(("url" . ,url))))))
+        :nothing-to-shorten))
 
 (defun parse-message-for-url-shortening (text)
   (cl-ppcre:scan-to-strings *url-shortening-regexp* text))
