@@ -10,7 +10,8 @@
                #:drakma
                #:cl-unicode
                #:cl-ppcre
-               #:cxml)
+               #:cxml
+               #:xml-emitter)
   :components ((:file "package")
                (:file "globals" :depends-on ("package"))
                (:file "local-config" :depends-on ("globals"))

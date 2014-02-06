@@ -81,3 +81,21 @@
                                                         ("text" . ,text))
                                           :external-format-out :UTF-8))
       :failed-in-sending-notification))
+
+
+(defun output-feed-item (type details)
+  (with-open-file (stream "/tmp/alice.rss"
+                   :direction :output
+                   :if-exists :supersede)
+  (xml-emitter:with-rss2 (stream)
+    (xml-emitter:rss-channel-header "Alice Margatroid" "http://temporal.pr0.pl/devblog")
+    (xml-emitter:rss-item type
+                          :description details
+                          :pubdate (current-time-as-rss-string)))))
+
+(defun current-time-as-rss-string ()
+  (multiple-value-bind (second minute hour date month year day-of-week dst-p tz)
+      (get-decoded-time)
+    (let ((months '("Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"))
+          (days '("Mon" "Tue" "Wed" "Thu" "Fri" "Sat" "Sun")))
+      (format nil "~A, ~2,'0d ~2,'0d ~d ~2,'0d:~2,'0d:~2,'0d GMT~@d" (nth day-of-week days) date (nth month months) year hour minute second (- tz)))))
