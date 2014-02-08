@@ -34,7 +34,6 @@
 ;;; ================================================================
 ;;; vvv                    UNDER CONSTRUCTION                    vvv
 ;;; ================================================================
-;; last 20 mesasges tracking
 (defparameter *channel-buffers* (make-hash-table :test 'equal))
 
 (defun store-message (channel message)
