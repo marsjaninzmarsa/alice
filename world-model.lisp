@@ -32,6 +32,16 @@
   (setf *connected-channels* (remove-if (lambda (x) (string= x channel)) *connected-channels*)))
 
 ;;; ================================================================
+;;; vvv                    UNDER CONSTRUCTION                    vvv
+;;; ================================================================
+;; last 20 mesasges tracking
+(defparameter *channel-buffers* (make-hash-table :test 'equal))
+
+(defun store-message (channel message)
+  (push message (gethash channel *channel-buffers*)))
+
+
+;;; ================================================================
 ;;; vvv              DEFINITELY UNDER CONSTRUCTION!              vvv
 ;;; ================================================================
   
