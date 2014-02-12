@@ -117,6 +117,11 @@ Just a helpul list so I don't forget ideas and concepts.
 
    Meh, this needs more thinking.
 
+   - Good point by someone on the IRC that we could use WHOIS data as
+     an important part of tracking. While not very reliable,
+     especially around IRC noobs, it can be useful to pre-populate
+     nick association data with high-probability entries.
+
 ** Emotions
    Reading papers about it right now. Implementing emotions into bots
 
