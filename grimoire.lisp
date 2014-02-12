@@ -1,8 +1,29 @@
 ;;;; Alice's Grimoire, the source of her more powerful magic.
-(in-package :alice)
+(in-package #:alice)
+
+(defun check-for-spelling-mistakes (message)
+  (let* ((mistakes (find-if (lambda (test)
+                              (not (null (cl-ppcre:all-matches (car test)
+                                                               message))))
+                            *spelling-tests*)))
+    (if mistakes
+        (cdr mistakes)
+        nil)))
 
 (defun do-google-search (query)
+  (declare (ignore query))
   )
+
+(defun shorten-url (url)
+  (if url
+      (or (ignore-errors (drakma::http-request "http://tinyurl.com/api-create.php"
+                                               :external-format-out :UTF-8
+                                               :parameters `(("url" . ,url))))
+          :failed-in-shortening)
+      :nothing-to-shorten))
+
+(defun parse-message-for-url-shortening (text)
+  (cl-ppcre:scan-to-strings *url-shortening-regexp* text))
 
 (defun do-wolfram-computation (query)
   (flet ((xml-response-to-speechstrings (xml)
@@ -30,20 +51,33 @@
 
     ;; code
     (if query
-        (clean-up (xml-response-to-speechstrings (get-xml-response query)))
+        (or (ignore-errors (clean-up (xml-response-to-speechstrings (get-xml-response query))))
+            :failed-in-computing)
         :nothing-to-compute)))
 
 (defun parse-message-for-wolfram-computation (text)
   (cl-ppcre:scan-to-strings *wolfram-query-regexp* text))
 
 (defun send-notification (what &optional (from ""))
-  (drakma:http-request "https://api.pushover.net/1/messages.json"
-                       :method :post
-                       :external-format-out :UTF-8
-                       :parameters `(("token" . ,*pushover-token*)
-                                     ("user" . ,*pushover-user*)
-                                     ("title" . ,*full-name*)
-                                     ("message" . ,(concatenate 'string "<" from "> " what)))
-                       :content "hack"
-                       :content-length 4))
+  (or (ignore-errors (drakma:http-request "https://api.pushover.net/1/messages.json"
+                                          :method :post
+                                          :external-format-out :UTF-8
+                                          :parameters `(("token" . ,*pushover-token*)
+                                                        ("user" . ,*pushover-user*)
+                                                        ("title" . ,*full-name*)
+                                                        ("message" . ,(concatenate 'string "<" from "> " what)))
+                                          :content "hack"
+                                          :content-length 4))
+      :failed-in-sending-notification))
 
+
+(defun send-email (where-to text)
+  (or (ignore-errors (drakma:http-request (concatenate 'string "https://api.mailgun.net/v2/" *mailgun-domain* "/messages")
+                                          :method :post
+                                          :basic-authorization `("api" ,*mailgun-key*)
+                                          :parameters `(("from" . ,(concatenate 'string "Alice Margatroid <alice.margatroid@" *mailgun-domain* ">"))
+                                                        ("to" . ,where-to)
+                                                        ("subject" . "Alice Margatroid here; got a notification for you.")
+                                                        ("text" . ,text))
+                                          :external-format-out :UTF-8))
+      :failed-in-sending-notification))
