@@ -14,6 +14,7 @@
       :nothing-to-shorten))
 
 (defun extract-urls-from-message (message-body)
+  "Return a list of all URLs recognized in the `MESSAGE-BODY' string."
   (remove nil (mapcar (lambda (str)(cl-ppcre::scan-to-strings *url-regexp* str))
                       (split-sequence:split-sequence #\Space message-body))))
 

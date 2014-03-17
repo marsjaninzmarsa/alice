@@ -103,3 +103,22 @@ Creates the object if not found."
   (let ((name (find-canonical-entry-with-stem-matching alias)))
     (gethash name *canonical-nicks*)))
 
+
+
+;; Remembering URLs
+
+;; FIXME reconsider what kind of info you want to store and display.
+
+(defvar *seen-links* '() "All links seen by Alice.")
+
+(defun remember-seen-link (channel url)
+  "Stores `URL', associating it with `CHANNEL'."
+  (push (cons channel url)
+        *seen-links*))
+
+(defun saw-link-on-channel-p (channel url)
+  "Returns T if Alice saw a particular `URL' being posted on a particular `CHANNEL', nil otherwise."
+  (find-if (lambda (entry)
+             (and (equalp (first entry) channel)
+                  (equalp (second entry) url)))
+           *seen-links*))

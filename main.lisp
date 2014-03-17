@@ -159,7 +159,7 @@
         ((and is-directed
               (or (mentions "skró" message-body)
                   (mentions "skracaj" message-body)))
-         (say destination (shorten-url (parse-message-for-url-shortening message-body))))
+         (say destination (shorten-url (first (extract-urls-from-message message-body)))))
 
         ;; Wolfram|Alpha
         ((and is-directed
