@@ -4,7 +4,7 @@
 
 (in-package #:alice.language)
 
-(defconstant +stems+ "(y|i|a|ie|owi|e|ę)")
+(defconstant +stems+ "(y|i|a|ie|owi|e|ę|iowi)")
 
 ;; functions related to language processing
 
@@ -17,6 +17,7 @@
               (len (length lowcase-target))
               (suffixless-target (subseq lowcase-target 0 (- len 1))))
          (or (equalp lowcase-word-checked lowcase-target)
+             (equalp lowcase-word-checked suffixless-target)
              (matches-regexp-p (make-stem-regexp lowcase-target) lowcase-word-checked)
              (matches-regexp-p (make-stem-regexp suffixless-target) lowcase-word-checked)))))
 
