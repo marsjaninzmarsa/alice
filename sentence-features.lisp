@@ -1,4 +1,8 @@
-(in-package #:alice)
+(defpackage #:alice.sentence-features
+  (:use #:cl)
+  (:export #:extract-words))
+
+(in-package #:alice.sentence-features)
 
 (defclass sentence-features ()
   ;; sentence-understanding-related

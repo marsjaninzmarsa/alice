@@ -1,5 +1,19 @@
 ;;;; Alice's Grimoire, the source of her more powerful magic.
-(in-package #:alice)
+(defpackage #:alice.grimoire
+  (:use #:cl
+        #:alice.globals)
+  (:export #:do-google-search
+           #:shorten-url
+           #:do-wolfram-computation
+           #:send-pushover-notification
+           #:send-email
+           #:check-for-memos
+           #:notify-via-memo            ;?? should this be exported?
+           #:make-pushover-notifier
+           #:make-email-notifier
+           #:notify-person))
+       
+(in-package #:alice.grimoire)
 
 (defun do-google-search (query)
   (declare (ignore query))
@@ -13,6 +27,7 @@
           :failed-in-shortening)
       :nothing-to-shorten))
 
+;; TODO move this function elsewhere? e.g. sentence-features?
 (defun extract-urls-from-message (message-body)
   (remove nil (mapcar (lambda (str)(cl-ppcre::scan-to-strings *url-regexp* str))
                       (split-sequence:split-sequence #\Space message-body))))
@@ -21,6 +36,7 @@
   (cl-ppcre:scan-to-strings *url-shortening-regexp* text))
 
 (defun do-wolfram-computation (query)
+  "Query Wolfram|Alpha API for `QUERY' and format response as string."
   (flet ((xml-response-to-speechstrings (xml)
            (coerce (alexandria:flatten (map 'list
                                             (lambda (el)
@@ -53,7 +69,8 @@
 (defun parse-message-for-wolfram-computation (text)
   (cl-ppcre:scan-to-strings *wolfram-query-regexp* text))
 
-(defun send-notification (what to-token from)
+(defun send-pushover-notification (what to-token from)
+  "Use Pushover API to send a message from `FROM' with contents `WHAT' to a Pushover user/group key `TO-TOKEN'."
   (if (ignore-errors (drakma:http-request "https://api.pushover.net/1/messages.json"
                                           :method :post
                                           :external-format-out :UTF-8
@@ -68,6 +85,7 @@
 
 
 (defun send-email (where-to text)
+  "Use an e-mail API (currently Mailgun) to send an e-mail containing `TEXT' to `WHERE-TO' address."
   (if (ignore-errors (drakma:http-request (concatenate 'string "https://api.mailgun.net/v2/" *mailgun-domain* "/messages")
                                           :method :post
                                           :basic-authorization `("api" ,*mailgun-key*)
@@ -137,7 +155,7 @@
 (defun make-pushover-notifier (pushover-key)
   (lambda (channel who what from-who is-global)
     (declare (ignore channel who is-global))
-    (send-notification what pushover-key from-who)))
+    (send-pushover-notification what pushover-key from-who)))
 
 (defun make-email-notifier (email)
   (lambda (channel who what from-who is-global)
@@ -152,5 +170,5 @@
            channel target-user message-body from-who is-global))
 
 (defun pick-notifier (channel target-user message-body from-who is-global)
-  "Select notification method for given user."
+  "Select notification method for given user using provided context."
   (gethash (identify-person-canonical-name target-user) *user-notification-medium* #'notify-via-memo))

@@ -1,7 +1,21 @@
 ;;;; Alice (currently) lives in the IRC realm; here she keeps her model in her mind
 ;;;; of the IRC reality she is in.
 
-(in-package #:alice)
+(defpackage #:alice.world-model
+  (:use #:cl
+        #:alice.globals)
+  (:export #:store-joining-name
+           #:store-parting-name
+           #:store-names
+           #:join-channel
+           #:part-channel
+           #:known-nick
+           #:learn-canonical-name
+           #:remember-seen-nick
+           #:identify-person-mentioned
+           #:identify-person-canonical-name))
+
+(in-package #:alice.world-model)
 
 (defvar *connected-channels* '() "Channels the bot is currently at.")
 

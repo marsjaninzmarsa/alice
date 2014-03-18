@@ -1,8 +1,15 @@
-(in-package :alice)
+(defpackage #:alice-language
+  (:use #:cl)
+  (:export #:stem-matches-p))
+
+(in-package #:alice.language)
+
+(defconstant +stems+ "(y|i|a|ie|owi|e|ę)")
 
 ;; functions related to language processing
 
 (defun stem-matches-p (word-checked target)
+  "Check if `WORD-CHECKED' matches `TARGET', disregarding most popular inflection forms in Polish language. Eg. 'Janowi' should match 'Jan'."
   (and (stringp word-checked)
        (stringp target)
        (let* ((lowcase-word-checked (string-downcase word-checked))
@@ -15,15 +22,8 @@
 
 
 (defun make-stem-regexp (base-word)
-  (concatenate 'string "^" base-word "(y|i|a|ie|owi|e|ę)$"))
+  "Make a regexp that matches `BASE-WORD' extended by most common polish inflection suffixes."
+  (concatenate 'string "^" base-word +stems+ "$"))
 
 (defun matches-regexp-p (regexp string)
   (not (null (cl-ppcre:scan regexp string))))
-
-;;; stems
-;; wiktor owi
-;; wiktor a
-;; marchew ie
-;; marchew e
-;; marchew ę
-;; dreadlish owi

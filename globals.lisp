@@ -1,4 +1,10 @@
-(in-package #:alice)
+(defpackage #:alice.globals
+  (:use #:cl)
+  (:export #:*connection*))
+;; FIXME export all global variables. Why so much repeating? :(.
+;; FIXME is there an global export-all?
+
+(in-package #:alice.globals)
 
 (defvar *connection*)
 
