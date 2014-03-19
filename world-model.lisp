@@ -4,7 +4,9 @@
 (defpackage #:alice.world-model
   (:use #:cl
         #:alice.globals)
-  (:export #:store-joining-name
+  (:export #:clear-nonpersistent-worldstate
+           #:load-persistent-world-model-data
+           #:store-joining-name
            #:store-parting-name
            #:store-names
            #:join-channel
@@ -97,7 +99,7 @@ Creates the object if not found."
   (with-hash-table-iterator (generator *canonical-nicks*)
     (loop (multiple-value-bind (more? key value) (generator)
             (unless more? (return nil))
-            (if (stem-matches-p name key)
+            (if (alice.language:stem-matches-p name key)
                 (return key))))))
 
 ;; resolving people from free-form text

@@ -1,4 +1,4 @@
-(defpackage #:alice-language
+(defpackage #:alice.language
   (:use #:cl)
   (:export #:stem-matches-p))
 

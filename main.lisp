@@ -252,8 +252,8 @@
 ;; entry point
 
 (defun start-alice (&key (server *server*) (nick *nick*) (password *password*) (channels *autojoin-channels*))
-  (clear-nonpersistent-worldstate)
-  (load-persistent-world-model-data)
+  (alice.world-model:clear-nonpersistent-worldstate)
+  (alice.world-model:load-persistent-world-model-data)
 
   (setf *nick* nick)
   (setf *connection* (irc:connect :nickname *nick*
@@ -261,7 +261,7 @@
 
   (irc:privmsg *connection* +nickserv+ (format nil +nickserv-identify-msg-template+ password))
 
-  (mapcar (lambda (channel) (join-channel channel)) channels)
+  (mapcar (lambda (channel) (alice.world-model:join-channel channel)) channels)
 
   (irc:add-hook *connection* 'irc:irc-privmsg-message 'msg-hook)
   (irc:add-hook *connection* 'irc:irc-join-message 'join-hook)
@@ -288,7 +288,7 @@
   (irc:privmsg *connection* destination what))
 
 (defun impersonate-join (channel &key password)
-  (join-channel channel :password password))
+  (alice.world-model:join-channel channel :password password))
 
 (defun impersonate-part (channel)
-  (part-channel channel))
+  (alice.world-model:part-channel channel))

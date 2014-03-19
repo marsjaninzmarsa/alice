@@ -11,12 +11,12 @@
                #:cl-unicode
                #:cl-ppcre
                #:cxml)
-  :components ((:file "package")
-               (:file "globals" :depends-on ("package"))
+  :components ((:file "globals")
+               (:file "package" :depends-on ("globals"))
                (:file "language" :depends-on ("globals"))
                (:file "world-model" :depends-on ("language"))
                (:file "grimoire" :depends-on ("world-model"))
                (:file "sentence-features" :depends-on ("world-model"))
                (:file "local-config" :depends-on ("grimoire"))
-               (:file "main" :depends-on ("grimoire"))
+               (:file "main" :depends-on ("grimoire" "package"))
                (:file "debug-utils" :depends-on ("main"))))

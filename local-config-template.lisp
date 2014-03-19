@@ -16,5 +16,5 @@
 
 
 ;; alternative notifications to memos - specify nick and alternative notification function
-(setf (gethash "ShanghaiDoll" *user-notification-medium*) (make-pushover-notifier "insert pushover user or group key")
-      (gethash "HouraiDoll" *user-notification-medium*) (make-email-notifier "insert e-mail address"))
+(setf (gethash "ShanghaiDoll" *user-notification-medium*) (alice.grimoire:make-pushover-notifier "insert pushover user or group key")
+      (gethash "HouraiDoll" *user-notification-medium*) (alice.grimoire:make-email-notifier "insert e-mail address"))

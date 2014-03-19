@@ -139,7 +139,7 @@
 
 (defun check-for-memos (destination for-who)
   "See if user `FROM-WHO' writing at `DESTINATION' has any pending memos and if so, grab the first one and write it to him/her."
-  (let* ((who (identify-person-canonical-name for-who))
+  (let* ((who (alice.world-model:identify-person-canonical-name for-who))
          (all-memos (gethash who *memos*))
          (matching-memos (find-matching-memos for-who destination all-memos))
          (memo (first matching-memos)))
@@ -181,4 +181,4 @@ Parameter `IS-GLOBAL' can be safely ignored, as it will be removed or reworked i
 
 (defun pick-notifier (channel target-user message-body from-who is-global)
   "Select notification method for given user using provided context."
-  (gethash (identify-person-canonical-name target-user) *user-notification-medium* #'notify-via-memo))
+  (gethash (alice.world-model:identify-person-canonical-name target-user) *user-notification-medium* #'notify-via-memo))

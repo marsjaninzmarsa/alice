@@ -1,10 +1,10 @@
-(defpackage #:alice-debug
+(defpackage #:alice.debug
   (:use #:cl #:alice)
   (:nicknames #:aldbg)
   (:export #:dump-hashtable
            #:read-back-into-hashtable))
 
-(in-package #:alice-debug)
+(in-package #:alice.debug)
 
 (defun dump-hashtable (hashtable filename)
   "Serializes all `HASHTABLE' data into a file `FILENAME'. Such file can be read back by `READ-BACK-INTO-HASHTABLE'."
