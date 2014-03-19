@@ -1,7 +1,8 @@
 ;;;; package.lisp
 
 (defpackage #:alice
-  (:use #:cl)
+  (:use #:cl
+        #:alice.globals)
   (:export #:start-alice
            #:stop-alice
            #:impersonate-say

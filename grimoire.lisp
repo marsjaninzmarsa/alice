@@ -15,25 +15,21 @@
        
 (in-package #:alice.grimoire)
 
+;; exported functions
+
 (defun do-google-search (query)
+  "Run a Google search. Not yet implemented."
   (declare (ignore query))
-  )
+  nil)
 
 (defun shorten-url (url)
+  "Shorten `URL' using an external service (currently, tinyurl.com). Returns shortened URL or a failure message."
   (if url
       (or (ignore-errors (drakma::http-request "http://tinyurl.com/api-create.php"
                                                :external-format-out :UTF-8
                                                :parameters `(("url" . ,url))))
           :failed-in-shortening)
       :nothing-to-shorten))
-
-;; TODO move this function elsewhere? e.g. sentence-features?
-(defun extract-urls-from-message (message-body)
-  (remove nil (mapcar (lambda (str)(cl-ppcre::scan-to-strings *url-regexp* str))
-                      (split-sequence:split-sequence #\Space message-body))))
-
-(defun parse-message-for-url-shortening (text)
-  (cl-ppcre:scan-to-strings *url-shortening-regexp* text))
 
 (defun do-wolfram-computation (query)
   "Query Wolfram|Alpha API for `QUERY' and format response as string."
@@ -66,9 +62,6 @@
             :failed-in-computing)
         :nothing-to-compute)))
 
-(defun parse-message-for-wolfram-computation (text)
-  (cl-ppcre:scan-to-strings *wolfram-query-regexp* text))
-
 (defun send-pushover-notification (what to-token from)
   "Use Pushover API to send a message from `FROM' with contents `WHAT' to a Pushover user/group key `TO-TOKEN'."
   (if (ignore-errors (drakma:http-request "https://api.pushover.net/1/messages.json"
@@ -83,6 +76,19 @@
       :notification-sent
       :failed-in-sending-notification))
 
+;; private / implementation-details functions
+
+;; TODO move this function elsewhere? e.g. sentence-features?
+(defun extract-urls-from-message (message-body)
+  (remove nil (mapcar (lambda (str)(cl-ppcre::scan-to-strings *url-regexp* str))
+                      (split-sequence:split-sequence #\Space message-body))))
+
+(defun parse-message-for-url-shortening (text)
+  (cl-ppcre:scan-to-strings *url-shortening-regexp* text))
+
+
+(defun parse-message-for-wolfram-computation (text)
+  (cl-ppcre:scan-to-strings *wolfram-query-regexp* text))
 
 (defun send-email (where-to text)
   "Use an e-mail API (currently Mailgun) to send an e-mail containing `TEXT' to `WHERE-TO' address."
@@ -145,6 +151,7 @@
 
 
 (defun notify-via-memo (channel who what from-who is-global)
+  "Create a memo for `WHO' on `CHANNEL' containing the text `WHAT' from person `FROM-WHO'. `IS-GLOBAL' is irrelevant and can be ignored; it will be removed (or reworked) in the future."
   (let ((memo (make-memo (and is-global channel)
                                who what from-who)))
     (if memo
@@ -153,11 +160,13 @@
         :memo-failed)))
 
 (defun make-pushover-notifier (pushover-key)
+  "Returns function that will invoke `SEND-PUSHOVER-NOTIFICATION' with `PUSHOVER-KEY' as the destination."
   (lambda (channel who what from-who is-global)
     (declare (ignore channel who is-global))
     (send-pushover-notification what pushover-key from-who)))
 
 (defun make-email-notifier (email)
+  "Returns function that will invoke `SEND-EMAIL' with `EMAIL' as the destination."
   (lambda (channel who what from-who is-global)
     (declare (ignore channel who from-who is-global))
     (send-email email what)))
@@ -165,7 +174,8 @@
 ;; GENERAL NOTIFICATIONS
 
 (defun notify-person (channel target-user message-body from-who is-global)
-  "Notify a person using the most suitable medium available."
+  "Send a message from `FROM-WHO' to `TARGET-USER' on `CHANNEL' containing `MESSAGE-BODY' using the best method available for particular `TARGET-USER'.
+Parameter `IS-GLOBAL' can be safely ignored, as it will be removed or reworked in the future."
   (funcall (pick-notifier channel target-user message-body from-who is-global)
            channel target-user message-body from-who is-global))
 
