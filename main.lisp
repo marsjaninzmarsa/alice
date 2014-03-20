@@ -78,7 +78,8 @@
           (from-who (irc:source message))
           (message-body (second (irc:arguments message))))
 
-      (check-for-memos destination from-who)
+      (alice.grimoire:check-for-memos destination from-who)
+
       (cond
         ((and is-directed
               (or (mentions "zawiadom" message-body)
@@ -218,7 +219,7 @@
                 (canonical (third names)))
            (if (and alias canonical)
                (progn
-                 (learn-canonical-name alias canonical)
+                 (alice.world-model:learn-canonical-name alias canonical)
                  (say destination (format nil "Zapamiętałam ~A jako ~A." alias canonical)))
                (say destination "You fail at wydawanie poleceń. *sigh*"))))
 
@@ -232,22 +233,22 @@
 (defun join-hook (message)
   (let ((who (irc:source message))
         (where (first (irc:arguments message))))
-    (store-joining-name where who)))
+    (alice.world-model:store-joining-name where who)))
 
 (defun part-hook (message)
   (let ((who (irc:source message))
         (where (first (irc:arguments message))))
-    (store-parting-name where who)))
+    (alice.world-model:store-parting-name where who)))
 
 (defun names-hook (message)
   (let ((channel (third (irc:arguments message)))
         (nicks (fourth (irc:arguments message))))
-    (store-names channel (split-sequence:split-sequence #\Space nicks))))
+    (alice.world-model:store-names channel (split-sequence:split-sequence #\Space nicks))))
 
 (defun nick-hook (message)
   (let ((from (irc:source message))
         (to (first (irc:arguments message))))
-    (register-nick-change from to)))
+    (alice.world-model:register-nick-change from to)))
 
 ;; entry point
 

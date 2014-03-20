@@ -11,6 +11,7 @@
            #:store-names
            #:join-channel
            #:part-channel
+           #:register-nick-change
            #:known-nick
            #:learn-canonical-name
            #:remember-seen-nick
