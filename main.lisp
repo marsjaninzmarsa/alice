@@ -170,13 +170,13 @@
         ((and is-directed
               (or (mentions "skró" message-body)
                   (mentions "skracaj" message-body)))
-         (say destination (shorten-url (parse-message-for-url-shortening message-body))))
+         (say destination (alice.grimoire:shorten-url (alice.grimoire:parse-message-for-url-shortening message-body))))
 
         ;; Wolfram|Alpha
         ((and is-directed
               (or (mentions "licz" message-body)
                   (mentions "compute" message-body)))
-         (say destination (do-wolfram-computation (parse-message-for-wolfram-computation message-body))))
+         (say destination (alice.grimoire:do-wolfram-computation (alice.grimoire:parse-message-for-wolfram-computation message-body))))
 
 
         ;; continue throttled output

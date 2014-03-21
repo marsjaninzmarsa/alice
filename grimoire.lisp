@@ -6,6 +6,8 @@
            #:shorten-url
            #:do-wolfram-computation
            #:send-pushover-notification
+           #:parse-message-for-url-shortening
+           #:parse-message-for-wolfram-computation
            #:send-email
            #:check-for-memos
            #:notify-via-memo            ;?? should this be exported?
