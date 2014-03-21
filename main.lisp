@@ -1,5 +1,15 @@
+(defpackage #:alice
+  (:use #:cl
+        #:alice.globals)
+  (:export #:start-alice
+           #:stop-alice
+           #:impersonate-say
+           #:impersonate-join
+           #:impersonate-part
+           #:mute
+           #:unmute))
+
 (in-package #:alice)
-;;; "alice" goes here. Hacks and glory await! ;-)
 
 ;; functions
 ;; tools

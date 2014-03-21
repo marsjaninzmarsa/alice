@@ -12,7 +12,6 @@
                #:cl-ppcre
                #:cxml)
   :components ((:file "globals")
-               (:file "package" :depends-on ("globals"))
                (:file "language" :depends-on ("globals"))
                (:file "world-model" :depends-on ("language"))
                (:file "grimoire" :depends-on ("world-model"))
