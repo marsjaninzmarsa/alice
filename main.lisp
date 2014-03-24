@@ -96,12 +96,14 @@
                        (mentions "powiadom" message-body)
                        (mentions "przeka" message-body)
                        (mentions "pingnij" message-body)
+                       (mentions "zapyta" message-body)
+                       (mentions "spyta" message-body)
                        (mentions "memo" message-body)))
-         (progn (say destination (notify-person destination
-                                                (identify-person-mentioned message-body)
-                                                message-body
-                                                from-who
-                                                is-private))))
+         (progn (say destination (alice.grimoire:notify-person destination
+                                                               (alice.world-model:identify-person-mentioned message-body)
+                                                               message-body
+                                                               from-who
+                                                               is-private))))
 
         ;; introductions
         ((and is-directed
@@ -215,6 +217,15 @@
               (mentions "cycki" message-body))
          (say destination :notitsforyou :to from-who))
 
+        ((and (or is-public
+                  is-directed)
+              (equalp destination "#hackerspace-krk")
+              (or (mentions "robi sens" message-body)
+                  (mentions "robią sens" message-body)
+                  (mentions "robić sens" message-body)))
+         (say destination :point-out-making-sense :to "Wiktor"))
+
+
         ;; is this an accident?
         ((and (or is-public
                   is-directed)
@@ -224,7 +235,7 @@
         ;; temporary control for remembering names
         ((and is-private
               (mentions "zapamiętaj:" message-body))
-         (let* ((names (extract-words message-body))
+         (let* ((names (alice.sentence-features:extract-words message-body))
                 (alias (second names))
                 (canonical (third names)))
            (if (and alias canonical)

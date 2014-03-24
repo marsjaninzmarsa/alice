@@ -6,6 +6,14 @@
 
 (defconstant +stems+ "(y|i|a|ie|owi|e|ę|iowi)")
 
+(defconstant +regexp-special-characters+ ".^$*+?()[{\|\\")
+(defconstant +regexp-escape-special-characters-regexp-part+ (concatenate 'string
+                                                                         "(["
+                                                                         (coerce (mapcan (lambda (x) (list #\\ x))
+                                                                                         (coerce +regexp-special-characters+ 'list))
+                                                                                 'string)
+                                                                         "])"))
+
 ;; functions related to language processing
 
 (defun stem-matches-p (word-checked target)
@@ -24,7 +32,11 @@
 
 (defun make-stem-regexp (base-word)
   "Make a regexp that matches `BASE-WORD' extended by most common polish inflection suffixes."
-  (concatenate 'string "^" base-word +stems+ "$"))
+  (concatenate 'string "^" (escape-for-regexp base-word) +stems+ "$"))
 
 (defun matches-regexp-p (regexp string)
   (not (null (cl-ppcre:scan regexp string))))
+
+(defun escape-for-regexp (text)
+  (cl-ppcre:regex-replace-all +regexp-escape-special-characters-regexp-part+ text "\\\\\\1"))
+

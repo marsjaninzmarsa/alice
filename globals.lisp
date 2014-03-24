@@ -69,7 +69,7 @@
                       "Alice Margatroid, the Seven-Colored Puppeteer."
                       "Pozornie Zapracowana Youkai, Alice Margatroid."))
 
-    (:version . "0.0.47-feature/style (Ta zrefactorowana wenętrzenie)")
+    (:version . "0.0.49-feature/style. (Ta bez głupiego regexp-injection w parserze do memos)")
 
     (:smiles . (":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ; yeah, a cheap trick to fake probability distribution
                 ";)" ";)" ";)"";)" ";)" ";)"
@@ -179,6 +179,11 @@
                       "Nie pozwalaj sobie na za dużo."
                       "Może sam pokaż swoje najpierw."
                       "Troszkę przesadzasz."))
+
+    (:point-out-making-sense . ("!!! szybko !!!"
+                                "!! ↑↑"
+                                "↑↑↑↑"))
+    
 
     (:hello . ("czeeeeeeeeeść"
                "oh hai!"
