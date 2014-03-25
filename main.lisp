@@ -235,7 +235,7 @@
         ;; temporary control for remembering names
         ((and is-private
               (mentions "zapamiętaj:" message-body))
-         (let* ((names (alice.sentence-features:extract-words message-body))
+         (let* ((names (alice.language:extract-words message-body))
                 (alias (second names))
                 (canonical (third names)))
            (if (and alias canonical)

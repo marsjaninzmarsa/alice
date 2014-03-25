@@ -1,6 +1,5 @@
 (defpackage #:alice.sentence-features
-  (:use #:cl)
-  (:export #:extract-words))
+  (:use #:cl))
 
 (in-package #:alice.sentence-features)
 
@@ -54,14 +53,9 @@
     :documentation "Is this message send publicly on the channel (as opposed to direct messages)?")
 ))
 
-(defun extract-words (text)
-  (delete-duplicates
-   (cl-ppcre:all-matches-as-strings "[\\w\\|]{2,}" text)
-   :test #'string=))
-
 (defun extract-message-features (from message)
   (make-instance 'sentence-features
-                 :words (extract-words message)
+                 :words (alice.language:extract-words message)
                  :nicks-present nil
                  :nicks-known nil
                  :tone nil

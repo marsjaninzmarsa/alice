@@ -1,6 +1,7 @@
 (defpackage #:alice.language
   (:use #:cl)
-  (:export #:stem-matches-p))
+  (:export #:extract-words
+           #:stem-matches-p))
 
 (in-package #:alice.language)
 
@@ -15,6 +16,11 @@
                                                                          "])"))
 
 ;; functions related to language processing
+
+(defun extract-words (text)
+  (delete-duplicates
+   (cl-ppcre:all-matches-as-strings "[\\w\\|]{2,}" text)
+   :test #'string=))
 
 (defun stem-matches-p (word-checked target)
   "Check if `WORD-CHECKED' matches `TARGET', disregarding most popular inflection forms in Polish language. Eg. 'Janowi' should match 'Jan'."

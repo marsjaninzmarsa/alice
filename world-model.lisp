@@ -107,7 +107,7 @@ Creates the object if not found."
 ;; TODO replace current code with proper references to sentece-features when the latter are done.
 (defun identify-person-mentioned (message-body)
   "Take `MESSAGE-BODY', return canonical name of a first recognized person inside the message."
-  (let ((words (alice.sentence-features:extract-words message-body))) ;FIXME I don't like this circular module dependency here. `sentence-features' component is based on `world-model'.
+  (let ((words (alice.language:extract-words message-body))) ;FIXME I don't like this circular module dependency here. `sentence-features' component is based on `world-model'.
     (find-if (lambda (word)
                (and (not (equalp word *nick*))
                     (not (null (identify-person-canonical-name word)))))
