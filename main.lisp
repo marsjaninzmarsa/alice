@@ -6,6 +6,7 @@
            #:impersonate-say
            #:impersonate-join
            #:impersonate-part
+           #:impersonate-slap
            #:mute
            #:unmute))
 
@@ -105,6 +106,10 @@
                                                                from-who
                                                                is-private))))
 
+        ((or (mentions "kirisame" message-body)
+             (mentions "marisa" message-body))
+         (say destination :marisa))
+
         ;; introductions
         ((and is-directed
               (or (mentions "poznaj" message-body)
@@ -133,7 +138,10 @@
                   (mentions "dziekuje" message-body)
                   (mentions "dziękuje" message-body)
                   (mentions "dziękuję" message-body)))
-         (say destination :thanks-reply))
+         (progn (say destination :thanks-reply)
+                (if (or (mentions ":*" message-body)
+                        (mentions "sło" message-body))
+                    (say destination :blush))))
 
         ;; temp check
         ((and is-directed
@@ -178,8 +186,8 @@
         ((and is-directed
               (or (mentions "licz" message-body)
                   (mentions "compute" message-body)))
-         (say destination (alice.grimoire:do-wolfram-computation (alice.grimoire:parse-message-for-wolfram-computation message-body))))
-
+         (say destination :wolfram-turned-off))
+;;         (say destination (do-wolfram-computation (parse-message-for-wolfram-computation message-body)))) 
 
         ;; continue throttled output
         ((and is-directed
@@ -217,6 +225,10 @@
               (mentions "cycki" message-body))
          (say destination :notitsforyou :to from-who))
 
+        ((and is-public
+              (mentions "!votekick" message-body))
+         (say destination "y"))
+
         ((and (or is-public
                   is-directed)
               (equalp destination "#hackerspace-krk")
@@ -231,6 +243,15 @@
                   is-directed)
               (mentions "przypadek?" message-body))
          (say destination "nie sądzę."))
+
+        ((and (or is-public
+                 is-directed)
+              (or
+               (mentions "yolo" message-body)
+               (mentions "jolo" message-body)))
+         (if (= 0 (random 3))
+             (say destination :yolo :to from-who)))
+             
 
         ;; temporary control for remembering names
         ((and is-private
@@ -314,3 +335,7 @@
 
 (defun impersonate-part (channel)
   (alice.world-model:part-channel channel))
+
+(defun impersonate-slap (channel user)
+  (irc::action alice::*connection* channel (concatenate 'string "slaps " user " with a Shanghai doll.")))
+

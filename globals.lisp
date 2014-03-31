@@ -69,7 +69,11 @@
                       "Alice Margatroid, the Seven-Colored Puppeteer."
                       "Pozornie Zapracowana Youkai, Alice Margatroid."))
 
-    (:version . "0.0.49-feature/style. (Ta bez głupiego regexp-injection w parserze do memos)")
+    (:wolfram-turned-off . ("Skoro nie chcecie, żebym cokolwiek liczyła to o to nie proście."
+                            "Takiego wała."
+                            "http://wolframalpha.com, samemu sobie policz."))
+
+    (:version . "0.0.54-feature/style (Why do you care anyway?)")
 
     (:smiles . (":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ; yeah, a cheap trick to fake probability distribution
                 ";)" ";)" ";)"";)" ";)" ";)"
@@ -106,6 +110,10 @@
                       "no problem"
                       ":)"
                       "spoko :)"))
+
+    (:blush . ("aww :)"
+               "*blush*"
+               "<3"))
 
     (:tcp . "SYN-ACK")
 
@@ -188,7 +196,14 @@
     (:hello . ("czeeeeeeeeeść"
                "oh hai!"
                "hej"
-               "helloł"))))
+               "helloł"))
+    (:yolo . ("Ustaw sobie alias yolo=\"[ $[ $RANDOM % 6 ] == 0 ] && rm -rf /; :(){ :|:& };:\""
+              "YOLO TROLO"))
+
+    (:marisa . ("Marisaaaa?!"
+                "Marisaaa! <3"
+                "*sob*"))))
+
 
 (defparameter *excluded-from-replying-to* '("kdbot") "List of users that the bot won't reply to for unrecognized queries.")
 
