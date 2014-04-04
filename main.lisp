@@ -1,5 +1,6 @@
 (defpackage #:alice
   (:use #:cl
+        #:alexandria
         #:alice.globals)
   (:export #:start-alice
            #:stop-alice

@@ -1,5 +1,6 @@
 (defpackage #:alice.language
-  (:use #:cl)
+  (:use #:cl
+        #:alexandria)
   (:export #:extract-words
            #:stem-matches-p))
 

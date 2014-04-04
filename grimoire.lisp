@@ -118,8 +118,8 @@
 (defvar *memos* (make-hash-table :test 'equalp))
 
 (defun make-memo (channel who what from-who)
-  (let ((target (identify-person-canonical-name who)))
-     (when target (list channel (identify-person-canonical-name who) what from-who (local-time:now)))))
+  (let ((target (alice.world-model:identify-person-canonical-name who)))
+     (when target (list channel (alice.world-model:identify-person-canonical-name who) what from-who (local-time:now)))))
 
 (defun memo-to-string (memo)
   (format nil "~A ma dla Ciebie wiadomość z ~A ⇒ ~A" (fourth memo) (local-time:format-timestring nil (fifth memo) :format +timestring-format+) (third memo)))
@@ -149,9 +149,9 @@
 Also check for private memos (sent by query), and if any found, send it to him/her in private."
   (let ((who (alice.world-model:identify-person-canonical-name for-who)))
     (labels ((dispatch-memo (to-where to-who memo more?)
-               (say to-where (memo-to-string memo) :to to-who)
+               (alice:say to-where (memo-to-string memo) :to to-who)
                (when more?
-                 (say to-where :more-memos :to to-who)))
+                 (alice:say to-where :more-memos :to to-who)))
 
              (handle-memos (from-where to-where to-who)
                "Find a first matching memo, dispatch it and remove from memo list."
