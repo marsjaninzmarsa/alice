@@ -1,33 +1,35 @@
 (defpackage #:alice.debug
   (:use #:cl #:alice)
   (:nicknames #:aldbg)
-  (:export #:dump-hashtable
-           #:read-back-into-hashtable
-           #:get-background-handler-instance
+  (:export #:get-background-handler-instance
            #:attach-standard-output-to-slime
            #:detach-standard-output-from-slime))
 
 (in-package #:alice.debug)
 
-(defun dump-hashtable (hashtable filename)
-  "Serializes all `HASHTABLE' data into a file `FILENAME'. Such file can be read back by `READ-BACK-INTO-HASHTABLE'."
-  (let ((entries '()))
-    (maphash (lambda (k v) (push (cons k v) entries)) hashtable)
-    (with-open-file (out filename :if-exists :supersede :direction :output)
-      (with-standard-io-syntax
-        (print entries out)))
-    entries))
 
+(defun deconstruct-memo (memo)
+  (print memo)
+  (if (= 5 (length memo))
+      (list (first memo)
+            (second memo)
+            (third memo)
+            (fourth memo)
+            (local-time:timestamp-to-unix (fifth memo)))
+      memo))
 
-(defun read-back-into-hashtable (hashtable filename)
-  "Reads into `HASHTABLE' data from `FILENAME' that was dumped by `DUMP-HASHTABLE' and returns it value."
-  (let ((data '()))
-    (with-open-file (in filename)
-      (with-standard-io-syntax
-        (setf data (read in))))
-    (mapc (lambda (entry) (setf (gethash (car entry) hashtable)
-                                (cdr entry)))
-          data)))
+(defun reconstruct-memo (memo-data)
+  (list (first memo-data)
+        (second memo-data)
+        (third memo-data)
+        (fourth memo-data)
+        (local-time:unix-to-timestamp (fifth memo-data))))
+
+;; (defun dump-memos (&key (source-table alice::*memos*) (destination-file "memos.se"))
+;;   (dump-hashtable source-table destination-file :value-deconstructor #'deconstruct-memo))
+
+;; (defun read-back-memos (&key (destination-table alice::*memos*) (source-file "memos.se"))
+;;   (read-back-into-hashtable destination-table source-file :value-constructor #'reconstruct-memo))
 
 (defun get-background-handler-instance ()
   "Get instance of the (CCL) process of the message loop."

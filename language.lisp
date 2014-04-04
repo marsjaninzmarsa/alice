@@ -5,15 +5,19 @@
 
 (in-package #:alice.language)
 
-(defconstant +stems+ "(y|i|a|ie|owi|e|ę|iowi)")
 
-(defconstant +regexp-special-characters+ ".^$*+?()[{\|\\")
-(defconstant +regexp-escape-special-characters-regexp-part+ (concatenate 'string
-                                                                         "(["
-                                                                         (coerce (mapcan (lambda (x) (list #\\ x))
-                                                                                         (coerce +regexp-special-characters+ 'list))
-                                                                                 'string)
-                                                                         "])"))
+(define-constant +regexp-special-characters+ ".^$*+?()[{\|\\" :test #'string=)
+(define-constant
+    +regexp-escape-special-characters-regexp-part+
+    (concatenate 'string
+                 "(["
+                 (coerce (mapcan (lambda (x) (list #\\ x))
+                                 (coerce +regexp-special-characters+ 'list))
+                         'string)
+                 "])")
+  :test #'string=)
+
+(define-constant +stems+ "(y|i|a|ie|owi|e|ę|iowi)" :test #'string=)
 
 ;; functions related to language processing
 
@@ -45,4 +49,3 @@
 
 (defun escape-for-regexp (text)
   (cl-ppcre:regex-replace-all +regexp-escape-special-characters-regexp-part+ text "\\\\\\1"))
-

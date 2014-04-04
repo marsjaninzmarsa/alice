@@ -73,7 +73,7 @@
                             "Takiego wała."
                             "http://wolframalpha.com, samemu sobie policz."))
 
-    (:version . "0.0.54-feature/style (Why do you care anyway?)")
+    (:version . "0.0.60-feature/style (Ta, którą odwiedziła biblioteka aleksandryjska.)")
 
     (:smiles . (":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ; yeah, a cheap trick to fake probability distribution
                 ";)" ";)" ";)"";)" ";)" ";)"
@@ -192,11 +192,9 @@
                       "Może sam pokaż swoje najpierw."
                       "Troszkę przesadzasz."))
 
-    (:point-out-making-sense . ("!!! szybko !!!"
-                                "!! ↑↑"
-                                "↑↑↑↑"))
+    (:point-out-making-sense . ("Powiedziałabym coś, ale może to wyglądać nieco pasywno-agresywnie..."
+                                "khem..."))
     
-
     (:hello . ("czeeeeeeeeeść"
                "oh hai!"
                "hej"

@@ -10,8 +10,10 @@
                #:drakma
                #:cl-unicode
                #:cl-ppcre
-               #:cxml)
-  :components ((:file "globals")
+               #:cxml
+               #:local-time)
+  :components ((:file "persistence-utils" :depends-on ("package"))
+               (:file "globals" :depends-on ("package"))
                (:file "language" :depends-on ("globals"))
                (:file "world-model" :depends-on ("language"))
                (:file "grimoire" :depends-on ("world-model"))

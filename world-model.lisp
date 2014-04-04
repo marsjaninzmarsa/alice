@@ -91,7 +91,7 @@ Creates the object if not found."
 
 (defun learn-canonical-name (nick canonical-name)
   (setf (gethash nick *canonical-nicks*) canonical-name)
-  (alice-debug:dump-hashtable *canonical-nicks* "names.dat"))
+  (dump-hashtable *canonical-nicks* "names.dat"))
 
 (defun remember-seen-nick (nick)
   (unless (known-nick nick)
