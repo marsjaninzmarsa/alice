@@ -19,5 +19,6 @@
                (:file "grimoire" :depends-on ("world-model"))
                (:file "sentence-features" :depends-on ("world-model"))
                (:file "main" :depends-on ("grimoire"))
+               (:file "specials" :depends-on ("grimoire"))
                (:file "local-config" :depends-on ("grimoire" "main"))
                (:file "debug-utils" :depends-on ("main"))))

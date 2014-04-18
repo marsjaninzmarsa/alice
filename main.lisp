@@ -57,6 +57,9 @@
 (defun mentions (what string)
   (search (string-downcase what) (string-downcase string)))
 
+(defun mentions-regexp (regexp string)
+ (not (null (cl-ppcre:scan regexp string))))
+
 (defun mentions-name (name string)
   (mentions name string))
 
@@ -88,6 +91,7 @@
           (message-body (second (irc:arguments message))))
 
       (alice.grimoire:check-for-memos destination from-who)
+      ;; (alice.specials:handle-specials destination is-private is-public is-directed from-who message-body)
 
       (cond
         ((and is-directed
@@ -192,8 +196,8 @@
         ((and is-directed
               (or (mentions "licz" message-body)
                   (mentions "compute" message-body)))
-         (say destination :wolfram-turned-off))
-;;         (say destination (do-wolfram-computation (parse-message-for-wolfram-computation message-body)))) 
+         ;; (say destination :wolfram-turned-off))
+         (say destination (do-wolfram-computation (parse-message-for-wolfram-computation message-body))))
 
         ;; continue throttled output
         ((and is-directed
@@ -234,6 +238,12 @@
         ((and is-public
               (mentions "!votekick" message-body))
          (say destination "y"))
+
+        ((and is-public
+              (or (mentions-regexp "^dobranoc$" message-body)
+                  (and (mentions "spadam" message-body)
+                       (mentions "spać" message-body))))
+         (say destination :goodnight :to from-who))
 
         ((and (or is-public
                   is-directed)

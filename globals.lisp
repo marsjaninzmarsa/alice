@@ -73,7 +73,7 @@
                             "Takiego wała."
                             "http://wolframalpha.com, samemu sobie policz."))
 
-    (:version . "0.0.60-feature/style (Ta, którą odwiedziła biblioteka aleksandryjska.)")
+    (:version . "0.0.64-feature/style (Seven-Coloured Image Macro Youkai)")
 
     (:smiles . (":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ":)" ; yeah, a cheap trick to fake probability distribution
                 ";)" ";)" ";)"";)" ";)" ";)"
@@ -199,6 +199,13 @@
                "oh hai!"
                "hej"
                "helloł"))
+
+    (:goodnight . ("kolorowych!"
+                   "'branoc"
+                   "dobranoc"
+                   "cya"
+                   "'night"))
+
     (:yolo . ("Ustaw sobie alias yolo=\"[ $[ $RANDOM % 6 ] == 0 ] && rm -rf /; :(){ :|:& };:\""
               "YOLO TROLO"))
 
