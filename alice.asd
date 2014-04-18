@@ -12,8 +12,9 @@
                #:cl-ppcre
                #:cxml
                #:local-time)
-  :components ((:file "persistence-utils")
-               (:file "globals")
+  :components ((:file "packages")
+               (:file "persistence-utils" :depends-on ("packages"))
+               (:file "globals" :depends-on ("packages"))
                (:file "language" :depends-on ("globals"))
                (:file "world-model" :depends-on ("language"))
                (:file "grimoire" :depends-on ("world-model"))

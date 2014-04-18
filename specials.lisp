@@ -1,5 +1,5 @@
 ;; A file to separate out special situations
-(in-package :alice)
+(in-package :alice.specials)
 
 (defparameter *blueline-answers*
   '("heh"
@@ -54,43 +54,43 @@
 (defun handle-comments (destination is-private is-public is-directed from-who message-body)
   (declare (ignore from-who is-directed is-private))
   (flet ((say-image-macro (destination symbol)
-           (say destination (cdr (assoc symbol *comments-image-macros*)))))
+           (alice:say destination (cdr (assoc symbol *comments-image-macros*)))))
     (if is-public
         (cond
-          ((and (or (mentions "szynka" message-body)
-                    (mentions "szynkę" message-body)
-                    (mentions "szynke" message-body))
-                (mentions "z kotka" message-body))
+          ((and (or (alice:mentions "szynka" message-body)
+                    (alice:mentions "szynkę" message-body)
+                    (alice:mentions "szynke" message-body))
+                (alice:mentions "z kotka" message-body))
            (say-image-macro destination :szynka-z-kotka))
 
-          ((mentions "respectfully disagree" message-body)
+          ((alice:mentions "respectfully disagree" message-body)
            (say-image-macro destination :disagree))
 
-          ((mentions "memetic hazard" message-body)
+          ((alice:mentions "memetic hazard" message-body)
            (say-image-macro destination :memetic-hazard))
 
-          ((mentions-regexp "^stupidity\\." message-body)
+          ((alice:mentions-regexp "^stupidity\\." message-body)
            (say-image-macro destination :stupidity))
 
-          ((mentions-regexp "^oops\\." message-body)
+          ((alice:mentions-regexp "^oops\\." message-body)
            (say-image-macro destination :oops))
 
-          ((mentions "just because you can" message-body)
+          ((alice:mentions "just because you can" message-body)
            (say-image-macro destination :suitability))
 
-          ((mentions "i understood that reference" message-body)
+          ((alice:mentions "i understood that reference" message-body)
            (say-image-macro destination :reference))
 
-          ((or (mentions-regexp "^strong upvote" message-body)
-               (mentions-regexp "[^ \\+]\\+\\+\\+\\+$" message-body))
+          ((or (alice:mentions-regexp "^strong upvote" message-body)
+               (alice:mentions-regexp "[^ \\+]\\+\\+\\+\\+$" message-body))
            (say-image-macro destination :strong-upvote))
 
-          ((or (mentions "i have no idea what i'm doing" message-body)
-               (mentions "i have no idea what i am doing" message-body))
+          ((or (alice:mentions "i have no idea what i'm doing" message-body)
+               (alice:mentions "i have no idea what i am doing" message-body))
            (say-image-macro destination :noidea))
 
-          ((mentions "fuck science" message-body)
+          ((alice:mentions "fuck science" message-body)
            (say-image-macro destination :fuck-science))
 
-          ((mentions-regexp "^cool\\." message-body)
+          ((alice:mentions-regexp "^cool\\." message-body)
            (say-image-macro destination :cool))))))

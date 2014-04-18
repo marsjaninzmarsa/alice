@@ -1,18 +1,5 @@
 ;; Package definition central.
 
-(defpackage #:alice
-  (:use #:cl
-        #:alexandria
-        #:alice.globals)
-  (:export #:start-alice
-           #:stop-alice
-           #:impersonate-say
-           #:impersonate-join
-           #:impersonate-part
-           #:impersonate-slap
-           #:mute
-           #:unmute))
-
 (defpackage #:alice.globals
   (:use #:cl)
   (:export #:*connection*
@@ -38,6 +25,22 @@
            #:*throttled-output*
            #:*max-output-sequence-length*
            #:*user-notification-medium*))
+
+(defpackage #:alice
+  (:use #:cl
+        #:alexandria
+        #:alice.globals)
+  (:export #:start-alice
+           #:stop-alice
+           #:impersonate-say
+           #:impersonate-join
+           #:impersonate-part
+           #:impersonate-slap
+           #:mute
+           #:unmute
+           #:say
+           #:mentions
+           #:mentions-regexp))
 
 (defpackage #:alice.persistence-utils
   (:use #:cl)
@@ -95,3 +98,6 @@
            #:attach-standard-output-to-slime
            #:detach-standard-output-from-slime))
 
+(defpackage #:alice.specials
+  (:use #:cl)
+  (:export #:handle-specials))

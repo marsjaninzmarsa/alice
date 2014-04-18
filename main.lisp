@@ -78,7 +78,7 @@
           (message-body (second (irc:arguments message))))
 
       (alice.grimoire:check-for-memos destination from-who)
-      ;; (alice.specials:handle-specials destination is-private is-public is-directed from-who message-body)
+      (alice.specials:handle-specials destination is-private is-public is-directed from-who message-body)
 
       (cond
         ((and is-directed
