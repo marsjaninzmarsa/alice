@@ -65,6 +65,9 @@
                     *nick*)
       (mentions-name *nick* (second (irc:arguments message)))))
 
+(defun uptime ()
+  (concatenate 'string "Żyję od " (alice.language:format-date alice.globals:*uptime-global*) " " (alice.language:format-time alice.globals:*uptime-global*) "; nie śpię od " (alice.language:format-date alice.globals:*uptime-message-handler*) " " (alice.language:format-time alice.globals:*uptime-message-handler*) "."))
+
 ;;; handling
 
 (defun msg-hook (message)
@@ -116,6 +119,12 @@
                   (mentions "wersją" message-body)
                   (mentions "wersję" message-body)))
          (say destination :version))
+
+        ;; version number
+        ((and is-directed
+              (or (mentions "uptime" message-body)))
+         (say destination (uptime)))
+
 
         ;; be nice to thanks
         ((and is-directed

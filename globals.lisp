@@ -199,3 +199,6 @@
 (defparameter *max-output-sequence-length* 4)
 
 (defparameter *user-notification-medium* (make-hash-table :test 'equalp))
+
+(defvar *uptime-global* (local-time:now))
+(defvar *uptime-message-handler* (local-time:now))

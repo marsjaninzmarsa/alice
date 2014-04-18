@@ -24,7 +24,9 @@
            #:*wolfram-query-regexp*
            #:*throttled-output*
            #:*max-output-sequence-length*
-           #:*user-notification-medium*))
+           #:*user-notification-medium*
+           #:*uptime-global*
+           #:*uptime-message-handler*))
 
 (defpackage #:alice
   (:use #:cl
