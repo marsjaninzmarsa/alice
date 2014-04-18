@@ -1,20 +1,4 @@
 ;;;; Alice's Grimoire, the source of her more powerful magic.
-(defpackage #:alice.grimoire
-  (:use #:cl
-        #:alice.globals)
-  (:export #:do-google-search
-           #:shorten-url
-           #:do-wolfram-computation
-           #:send-pushover-notification
-           #:parse-message-for-url-shortening
-           #:parse-message-for-wolfram-computation
-           #:send-email
-           #:check-for-memos
-           #:notify-via-memo            ;?? should this be exported?
-           #:make-pushover-notifier
-           #:make-email-notifier
-           #:notify-person))
-       
 (in-package #:alice.grimoire)
 
 ;; exported functions

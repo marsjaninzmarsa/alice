@@ -1,11 +1,3 @@
-(defpackage #:alice.language
-  (:use #:cl
-        #:alexandria)
-  (:export #:extract-words
-           #:stem-matches-p
-           #:format-date
-           #:format-time))
-
 (in-package #:alice.language)
 
 

@@ -1,29 +1,3 @@
-(defpackage #:alice.globals
-  (:use #:cl)
-  (:export #:*connection*
-           #:*server*
-           #:*nick*
-           #:*password*
-           #:*pushover-token*
-           #:*pushover-admin-user*
-           #:*wolfram-app-id*
-           #:*mailgun-domain*
-           #:*mailgun-key*
-           #:*autojoin-channels*
-           #:*muted*
-           #:+nickserv+
-           #:+nickserv-identify-msg-template+
-           #:*full-name*
-           #:*default-phrase*
-           #:*answers*
-           #:*excluded-from-replying-to*
-           #:*url-regexp*
-           #:*url-shortening-regexp*
-           #:*wolfram-query-regexp*
-           #:*throttled-output*
-           #:*max-output-sequence-length*
-           #:*user-notification-medium*))
-
 (in-package #:alice.globals)
 
 (defvar *connection*)

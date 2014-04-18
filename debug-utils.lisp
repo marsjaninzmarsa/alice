@@ -1,10 +1,3 @@
-(defpackage #:alice.debug
-  (:use #:cl #:alice)
-  (:nicknames #:aldbg)
-  (:export #:get-background-handler-instance
-           #:attach-standard-output-to-slime
-           #:detach-standard-output-from-slime))
-
 (in-package #:alice.debug)
 
 

@@ -1,16 +1,3 @@
-(defpackage #:alice
-  (:use #:cl
-        #:alexandria
-        #:alice.globals)
-  (:export #:start-alice
-           #:stop-alice
-           #:impersonate-say
-           #:impersonate-join
-           #:impersonate-part
-           #:impersonate-slap
-           #:mute
-           #:unmute))
-
 (in-package #:alice)
 
 ;; functions

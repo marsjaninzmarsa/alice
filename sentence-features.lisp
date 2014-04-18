@@ -1,6 +1,3 @@
-(defpackage #:alice.sentence-features
-  (:use #:cl))
-
 (in-package #:alice.sentence-features)
 
 (defclass sentence-features ()

@@ -1,9 +1,4 @@
 ;; persistence primitives
-(defpackage #:alice.persistence-utils
-  (:use #:cl)
-  (:export #:dump-hashtable
-           #:read-back-into-hashtable))
-
 (in-package #:alice.persistence-utils)
 
 (defun dump-hashtable (hashtable filename)
