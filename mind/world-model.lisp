@@ -29,12 +29,12 @@
   (cl-ppcre:regex-replace "^[@\+]" name ""))
 
 ;; channel tracking
-(defun join-channel (channel &key password)
+(defun join-channel (channel &key password) ;FIXME this should be half-handled via IRC, half-handled by SOMETHING ELSE than world-model.
   (irc:join alice:*connection* channel :password password)
   (pushnew channel *connected-channels* :test #'string=))
 
 (defun part-channel (channel)
-  (irc:part alice:*connection* channel)
+  (irc:part alice:*connection* channel) ;FIXME this should be half-handled via IRC, half-handled by SOMETHING ELSE than world-model.
   (setf *connected-channels* (remove-if (lambda (x) (string= x channel)) *connected-channels*)))
   
 ;; people tracking

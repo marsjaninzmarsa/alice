@@ -13,10 +13,14 @@
                #:cxml
                #:local-time)
   :components ((:file "packages")
+
+               (:module "irc"
+                        :components ((:file "irc")))
+
                (:module "mind"
                         :components ((:file "world-model")
                                      (:file "sentence-features")
-                                     (:file "emotions"))
+                                     (:file "emotions")))
                (:module "language"
                         :components ((:file "phrases")
                                      (:file "language")))
@@ -34,7 +38,7 @@
                                      (:file "wolfram")
                                      (:file "specials")))
 
-               (:file "main" :depends-on ("grimoire"))
+               (:file "main" :depends-on ("irc" "grimoire"))
 
                (:module "config"
                         :components ((:file "local-config")))))

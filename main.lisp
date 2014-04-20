@@ -1,21 +1,9 @@
 (in-package #:alice.world-model)
 
-(defvar *connection*)
-
-;; configurables
-(defparameter *server* "")
-(defvar *nick* "")
-(defparameter *password* "")
-
-(defparameter *autojoin-channels* '())
-
 (defparameter *muted* nil)
 
 (defparameter *throttled-output* nil "A buffer for throttling the output to avoid flooding the channel.")
 (defparameter *max-output-sequence-length* 4)
-
-(defparameter +nickserv+ "NickServ")
-(defparameter +nickserv-identify-msg-template+ "IDENTIFY ~a")
 
 (defparameter *full-name* "Alice Margatroid")
 
@@ -333,6 +321,8 @@
   (alice.world-model:clear-nonpersistent-worldstate)
   (alice.world-model:load-persistent-world-model-data)
 
+  (alice.irc:start-irc-connection ...)
+
   (setf *nick* nick)
   (setf *connection* (irc:connect :nickname *nick*
                                   :server server))
@@ -352,7 +342,7 @@
   (irc:start-background-message-handler *connection*))
 
 (defun stop-alice (&optional (msg "Goodbye!"))
-      (irc:quit *connection* msg))
+  (irc:stop-irc-connection msg))
 
 (defun mute ()
   (setf *muted* t))
