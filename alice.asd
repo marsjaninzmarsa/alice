@@ -15,7 +15,8 @@
   :components ((:file "packages")
                (:module "mind"
                         :components ((:file "world-model")
-                                     (:file "sentence-features")))
+                                     (:file "sentence-features")
+                                     (:file "emotions"))
                (:module "language"
                         :components ((:file "phrases")
                                      (:file "language")))

@@ -1,4 +1,4 @@
-(in-package #:alice)
+(in-package #:alice.language)
 
 (defparameter *default-phrase* "Nie wiem co powiedzieć...")
 

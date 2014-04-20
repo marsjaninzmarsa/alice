@@ -1,4 +1,4 @@
-(in-package #:alice)
+(in-package #:alice.world-model)
 
 (defvar *connection*)
 
@@ -44,7 +44,7 @@
     (typecase what
       (null t)
 
-      (keyword (say to-where (cdr (assoc what *answers*)) :to to))
+      (keyword (say to-where (cdr (assoc what alice.language:*answers*)) :to to))
 
       (list (say to-where
                  (random-elt what)
@@ -62,7 +62,7 @@
                 (say to-where msg :to to))
               tosay)))
 
-      (t (irc:privmsg *connection* to-where *default-phrase*)))))
+      (t (irc:privmsg *connection* to-where alice.language:*default-phrase*)))))
 
 ;;; utils
 (defun mentions (what string)

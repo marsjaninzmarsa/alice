@@ -15,8 +15,6 @@
            #:*uptime-global*
            #:*uptime-message-handler*
            #:*full-name*
-           #:*default-phrase*
-           #:*answers*
            #:*excluded-from-replying-to*
            #:*throttled-output*
 
@@ -37,10 +35,16 @@
   (:export #:dump-hashtable
            #:read-back-into-hashtable))
 
+(defpackage #:alice.irc
+  (:use #:cl))
+
 (defpackage #:alice.language
   (:use #:cl
         #:alexandria)
-  (:export #:extract-words
+  (:export #:*default-phrase*
+           #:*answers*
+
+           #:extract-words
            #:stem-matches-p
            #:format-date
            #:format-time))
@@ -70,6 +74,9 @@
            #:notify-person))
 
 (defpackage #:alice.sentence-features
+  (:use #:cl))
+
+(defpackage #:alice.emotions
   (:use #:cl))
 
 (defpackage #:alice.world-model
