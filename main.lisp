@@ -1,5 +1,29 @@
 (in-package #:alice)
 
+(defvar *connection*)
+
+;; configurables
+(defparameter *server* "")
+(defvar *nick* "")
+(defparameter *password* "")
+
+(defparameter *autojoin-channels* '())
+
+(defparameter *muted* nil)
+
+(defparameter *throttled-output* nil "A buffer for throttling the output to avoid flooding the channel.")
+(defparameter *max-output-sequence-length* 4)
+
+(defparameter +nickserv+ "NickServ")
+(defparameter +nickserv-identify-msg-template+ "IDENTIFY ~a")
+
+(defparameter *full-name* "Alice Margatroid")
+
+(defparameter *excluded-from-replying-to* '("kdbot") "List of users that the bot won't reply to for unrecognized queries.")
+
+(defvar *uptime-global* (local-time:now))
+(defvar *uptime-message-handler* (local-time:now))
+
 ;; functions
 ;; tools
 (defun throttle (messages)
@@ -66,7 +90,7 @@
       (mentions-name *nick* (second (irc:arguments message)))))
 
 (defun uptime ()
-  (concatenate 'string "Żyję od " (alice.language:format-date alice.globals:*uptime-global*) " " (alice.language:format-time alice.globals:*uptime-global*) "; nie śpię od " (alice.language:format-date alice.globals:*uptime-message-handler*) " " (alice.language:format-time alice.globals:*uptime-message-handler*) "."))
+  (concatenate 'string "Żyję od " (alice.language:format-date *uptime-global*) " " (alice.language:format-time *uptime-global*) "; nie śpię od " (alice.language:format-date *uptime-message-handler*) " " (alice.language:format-time *uptime-message-handler*) "."))
 
 ;;; handling
 

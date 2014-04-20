@@ -1,38 +1,26 @@
 ;; Package definition central.
 
-(defpackage #:alice.globals
-  (:use #:cl)
+(defpackage #:alice
+  (:use #:cl
+        #:alexandria)
   (:export #:*connection*
            #:*server*
            #:*nick*
            #:*password*
-           #:*pushover-token*
-           #:*pushover-admin-user*
-           #:*wolfram-app-id*
-           #:*mailgun-domain*
-           #:*mailgun-key*
            #:*autojoin-channels*
            #:*muted*
            #:+nickserv+
            #:+nickserv-identify-msg-template+
+           #:*max-output-sequence-length*
+           #:*uptime-global*
+           #:*uptime-message-handler*
            #:*full-name*
            #:*default-phrase*
            #:*answers*
            #:*excluded-from-replying-to*
-           #:*url-regexp*
-           #:*url-shortening-regexp*
-           #:*wolfram-query-regexp*
            #:*throttled-output*
-           #:*max-output-sequence-length*
-           #:*user-notification-medium*
-           #:*uptime-global*
-           #:*uptime-message-handler*))
 
-(defpackage #:alice
-  (:use #:cl
-        #:alexandria
-        #:alice.globals)
-  (:export #:start-alice
+           #:start-alice
            #:stop-alice
            #:impersonate-say
            #:impersonate-join
@@ -58,9 +46,17 @@
            #:format-time))
 
 (defpackage #:alice.grimoire
-  (:use #:cl
-        #:alice.globals)
-  (:export #:do-google-search
+  (:use #:cl)
+  (:export #:*pushover-token*
+           #:*pushover-admin-user*
+           #:*wolfram-app-id*
+           #:*mailgun-domain*
+           #:*mailgun-key*
+           #:*url-shortening-regexp*
+           #:*wolfram-query-regexp*
+           #:*user-notification-medium*
+
+           #:do-google-search
            #:shorten-url
            #:do-wolfram-computation
            #:send-pushover-notification
@@ -77,8 +73,7 @@
   (:use #:cl))
 
 (defpackage #:alice.world-model
-  (:use #:cl
-        #:alice.globals)
+  (:use #:cl)
   (:export #:clear-nonpersistent-worldstate
            #:load-persistent-world-model-data
            #:store-joining-name

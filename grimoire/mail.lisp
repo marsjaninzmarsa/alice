@@ -1,5 +1,8 @@
 (in-package #:alice.grimoire)
 
+(defparameter *mailgun-domain* "")
+(defparameter *mailgun-key* "")
+
 (defun send-email (where-to text)
   "Use an e-mail API (currently Mailgun) to send an e-mail containing `TEXT' to `WHERE-TO' address."
   (if (ignore-errors (drakma:http-request (concatenate 'string "https://api.mailgun.net/v2/" *mailgun-domain* "/messages")

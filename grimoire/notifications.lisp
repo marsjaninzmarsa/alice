@@ -1,5 +1,7 @@
 (in-package #:alice.grimoire)
 
+(defparameter *user-notification-medium* (make-hash-table :test 'equalp))
+
 (defun make-pushover-notifier (pushover-key)
   "Returns function that will invoke `SEND-PUSHOVER-NOTIFICATION' with `PUSHOVER-KEY' as the destination."
   (lambda (channel who what from-who is-private)

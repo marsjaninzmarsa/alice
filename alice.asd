@@ -13,10 +13,11 @@
                #:cxml
                #:local-time)
   :components ((:file "packages")
-
-               (:file "globals" :depends-on ("packages"))
-               (:file "language" :depends-on ("globals"))
-               (:file "world-model" :depends-on ("language"))
+               (:module "mind"
+                        :components ((:file "world-model")
+                                     (:file "sentence-features")))
+               (:module "language"
+                        :components ((:file "language")))
 
                (:module "utils"
                         :components ((:file "persistence-utils")
@@ -30,8 +31,6 @@
                                      (:file "url-shortener")
                                      (:file "wolfram")
                                      (:file "specials")))
-
-               (:file "sentence-features" :depends-on ("world-model"))
 
                (:file "main" :depends-on ("grimoire"))
 

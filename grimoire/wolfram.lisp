@@ -1,5 +1,9 @@
 (in-package #:alice.grimoire)
 
+(defparameter *wolfram-app-id* "")
+
+(defparameter *wolfram-query-regexp* "\"(.*)\"" "A regexp to extract question part when performing Wolfram|Alpha search.")
+
 (defun do-wolfram-computation (query)
   "Query Wolfram|Alpha API for `QUERY' and format response as string."
   (flet ((xml-response-to-speechstrings (xml)
