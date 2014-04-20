@@ -10,7 +10,7 @@
                                           :external-format-out :UTF-8
                                           :parameters `(("token" . ,*pushover-token*)
                                                         ("user" . ,to-token)
-                                                        ("title" . ,*full-name*)
+                                                        ("title" . ,alice:*full-name*)
                                                         ("message" . ,(concatenate 'string "<" from "> " what)))
                                           :content "hack"
                                           :content-length 4))

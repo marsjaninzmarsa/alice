@@ -217,7 +217,7 @@
               (or (mentions "licz" message-body)
                   (mentions "compute" message-body)))
          ;; (say destination :wolfram-turned-off))
-         (say destination (do-wolfram-computation (parse-message-for-wolfram-computation message-body))))
+         (say destination (alice.grimoire:do-wolfram-computation (alice.grimoire:parse-message-for-wolfram-computation message-body))))
 
         ;; continue throttled output
         ((and is-directed

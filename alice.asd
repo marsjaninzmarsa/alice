@@ -17,7 +17,8 @@
                         :components ((:file "world-model")
                                      (:file "sentence-features")))
                (:module "language"
-                        :components ((:file "language")))
+                        :components ((:file "phrases")
+                                     (:file "language")))
 
                (:module "utils"
                         :components ((:file "persistence-utils")

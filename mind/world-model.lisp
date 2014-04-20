@@ -30,11 +30,11 @@
 
 ;; channel tracking
 (defun join-channel (channel &key password)
-  (irc:join *connection* channel :password password)
+  (irc:join alice:*connection* channel :password password)
   (pushnew channel *connected-channels* :test #'string=))
 
 (defun part-channel (channel)
-  (irc:part *connection* channel)
+  (irc:part alice:*connection* channel)
   (setf *connected-channels* (remove-if (lambda (x) (string= x channel)) *connected-channels*)))
   
 ;; people tracking
@@ -93,7 +93,7 @@ Creates the object if not found."
   "Take `MESSAGE-BODY', return canonical name of a first recognized person inside the message."
   (let ((words (alice.language:extract-words message-body))) ;FIXME I don't like this circular module dependency here. `sentence-features' component is based on `world-model'.
     (find-if (lambda (word)
-               (and (not (equalp word *nick*))
+               (and (not (equalp word alice:*nick*))
                     (not (null (identify-person-canonical-name word)))))
              words)))
 
