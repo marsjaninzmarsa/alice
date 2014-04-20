@@ -13,13 +13,27 @@
                #:cxml
                #:local-time)
   :components ((:file "packages")
-               (:file "persistence-utils" :depends-on ("packages"))
+
                (:file "globals" :depends-on ("packages"))
                (:file "language" :depends-on ("globals"))
                (:file "world-model" :depends-on ("language"))
-               (:file "grimoire" :depends-on ("world-model"))
+
+               (:module "utils"
+                        :components ((:file "persistence-utils")
+                                     (:file "debug-utils")))
+               (:module "grimoire"
+                        :components ((:file "google")
+                                     (:file "mail")
+                                     (:file "memo")
+                                     (:file "notifications" :depends-on ("memo" "mail" "pushover"))
+                                     (:file "pushover")
+                                     (:file "url-shortener")
+                                     (:file "wolfram")
+                                     (:file "specials")))
+
                (:file "sentence-features" :depends-on ("world-model"))
+
                (:file "main" :depends-on ("grimoire"))
-               (:file "specials" :depends-on ("grimoire"))
-               (:file "local-config" :depends-on ("grimoire" "main"))
-               (:file "debug-utils" :depends-on ("main"))))
+
+               (:module "config"
+                        :components ((:file "local-config")))))
