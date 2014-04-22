@@ -1,5 +1,8 @@
 (in-package #:alice.irc)
 
+;; TODO this module should handle ALL direct interactions with cl-irc, as well as server stuff, nickserv, etc.
+
+
 (defvar *connection*)
 
 (defparameter *server* "")
