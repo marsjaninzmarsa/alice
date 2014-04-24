@@ -36,7 +36,15 @@
            #:read-back-into-hashtable))
 
 (defpackage #:alice.irc
-  (:use #:cl))
+  (:use #:cl)
+
+  (:export #:server
+           #:nick
+           #:password
+           #:autojoin-channels
+
+           #:start-irc-connection
+           #:stop-irc-connection))
 
 (defpackage #:alice.language
   (:use #:cl

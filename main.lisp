@@ -323,23 +323,14 @@
 
   (alice.irc:start-irc-connection ...)
 
-  (setf *nick* nick)
-  (setf *connection* (irc:connect :nickname *nick*
-                                  :server server))
+  (mapcar (lambda (channel) (alice.world-model:join-channel channel)) channels) ;; <-- ??
 
-  (irc:privmsg *connection* +nickserv+ (format nil +nickserv-identify-msg-template+ password))
-
-  (mapcar (lambda (channel) (alice.world-model:join-channel channel)) channels)
-
+  ;; TODO add those hooks through alice.irc?
   (irc:add-hook *connection* 'irc:irc-privmsg-message 'msg-hook)
   (irc:add-hook *connection* 'irc:irc-join-message 'join-hook)
   (irc:add-hook *connection* 'irc:irc-part-message 'part-hook)
   (irc:add-hook *connection* 'irc:irc-rpl_namreply-message 'names-hook)
-  (irc:add-hook *connection* 'irc:irc-nick-message 'nick-hook)
-
-  #+(or sbcl
-        openmcl)
-  (irc:start-background-message-handler *connection*))
+  (irc:add-hook *connection* 'irc:irc-nick-message 'nick-hook))
 
 (defun stop-alice (&optional (msg "Goodbye!"))
   (irc:stop-irc-connection msg))

@@ -1,8 +1,5 @@
 (in-package #:alice.irc)
 
-;; TODO this module should handle ALL direct interactions with cl-irc, as well as server stuff, nickserv, etc.
-
-
 (defvar *connection*)
 
 (defparameter *server* "")
@@ -15,9 +12,7 @@
 (define-constant +nickserv-identify-msg-template+ "IDENTIFY ~a" #'string=)
 
 (defun start-irc-connection (&key (server *server*) (nick *nick*) (password *password*) (channels *autojoin-channels*))
-  (alice.world-model:clear-nonpersistent-worldstate)
-  (alice.world-model:load-persistent-world-model-data)
-
+  
   (setf *nick* nick)
   (setf *connection* (irc:connect :nickname *nick*
                                   :server server))
