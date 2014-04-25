@@ -57,7 +57,7 @@
   (search (string-downcase what) (string-downcase string)))
 
 (defun mentions-regexp (regexp string)
- (not (null (cl-ppcre:scan regexp string))))
+  (alice.string-utils:matches-regexp-p regexp string))
 
 (defun mentions-name (name string)
   (mentions name string))

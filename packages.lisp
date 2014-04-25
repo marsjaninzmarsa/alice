@@ -35,6 +35,12 @@
   (:export #:dump-hashtable
            #:read-back-into-hashtable))
 
+(defpackage #:alice.string-utils
+  (:use #:cl)
+  (:export #:escape-for-regexp
+           #:matches-regexp-p
+           #:extract-words))
+
 (defpackage #:alice.irc
   (:use #:cl)
 
