@@ -14,6 +14,7 @@
 
 ;; functions
 ;; tools
+;; FIXME awesome; now let's make it work with multiple independent commands and/or channels
 (defun throttle (messages)
   (let ((len (length messages)))
     (if (> len *max-output-sequence-length*)
@@ -27,6 +28,8 @@
           (setf *throttled-output* nil)
           messages))))
 
+;; TODO generalize into a selector that's independend of the medium
+;; TODO handle throttling elsewhere (preferrably per-channel)
 (defun say (to-where what &key to)
   (unless *muted*
     (typecase what
@@ -53,6 +56,7 @@
       (t (irc:privmsg *connection* to-where alice.language:*default-phrase*)))))
 
 ;;; utils
+;; typical of sentence-features utils;
 (defun mentions (what string)
   (search (string-downcase what) (string-downcase string)))
 
@@ -63,6 +67,7 @@
   (mentions name string))
 
 ;; types of message
+;; these should go to sentence-features, or - as it should be named - message-features; but I guess we might keep the old name for the reason it sounds nicer,
 (defun public-message-p (message)
   (and
    (not (string-equal *nick* (first (irc:arguments message)))) ; search message
@@ -335,6 +340,9 @@
 (defun stop-alice (&optional (msg "Goodbye!"))
   (irc:stop-irc-connection msg))
 
+
+;; REPL-utils ?
+;; I mean, really, c'mon.
 (defun mute ()
   (setf *muted* t))
 
