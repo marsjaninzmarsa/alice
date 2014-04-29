@@ -20,9 +20,6 @@
 
            #:start-alice
            #:stop-alice
-           #:impersonate-say
-           #:impersonate-join
-           #:impersonate-part
            #:impersonate-slap
            #:mute
            #:unmute
@@ -50,7 +47,11 @@
            #:autojoin-channels
 
            #:start-irc-connection
-           #:stop-irc-connection))
+           #:stop-irc-connection
+           #:say
+           #:action
+           #:join-channel
+           #:part-channel))
 
 (defpackage #:alice.language
   (:use #:cl

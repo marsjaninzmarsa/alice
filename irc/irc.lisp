@@ -33,3 +33,20 @@
 
 (defun stop-irc-connection (&optional (msg "Goodbye!"))
       (irc:quit *connection* msg))
+
+;; FIXME just make these things being curried versions of original CL-IRC commands.
+(defun say (to-where what)
+  (irc:privmsg *connection* to-where what))
+
+(defun action (to-where what)
+  (irc::action *connection* to-where what))
+
+(defun notice (to-where what)
+  (irc:notice *connection* to-where what))
+
+(defun join-channel (channel &key password)
+  (irc:join *connection channel :password password))
+
+(defun part-channel (channel)
+  (irc:part *connection* channel))
+

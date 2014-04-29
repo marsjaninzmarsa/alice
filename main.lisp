@@ -351,15 +351,6 @@
 
 ;; impersonate function
 
-(defun impersonate-say (destination what)
-  (irc:privmsg *connection* destination what))
-
-(defun impersonate-join (channel &key password)
-  (alice.world-model:join-channel channel :password password))
-
-(defun impersonate-part (channel)
-  (alice.world-model:part-channel channel))
-
 (defun impersonate-slap (channel user)
   (irc::action alice::*connection* channel (concatenate 'string "slaps " user " with a Shanghai doll.")))
 
