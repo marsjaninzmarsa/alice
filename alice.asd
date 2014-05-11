@@ -17,6 +17,10 @@
                (:module "irc"
                         :components ((:file "irc")))
 
+               (:module "event-handlers"
+                        :components ((:file "clock")
+                                     (:file "irc")))
+
                (:module "core"
                         :components ((:file "world-model")
                                      (:file "sentence-features")

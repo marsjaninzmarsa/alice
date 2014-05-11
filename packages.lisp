@@ -53,6 +53,14 @@
            #:join-channel
            #:part-channel))
 
+(defpackage #:alice.event-handlers
+  (:use #:cl)
+  (:export #:irc-msg-hook
+           #:irc-join-hook
+           #:irc-part-hook
+           #:irc-names-hook
+           #:irc-nick-hook))
+
 (defpackage #:alice.language
   (:use #:cl
         #:alexandria)
