@@ -37,7 +37,6 @@
       (mentions-name *nick* (second (irc:arguments message)))))
 
 ;; entry point
-
 (defun start-alice (&key (server *server*) (nick *nick*) (password *password*) (channels *autojoin-channels*))
   (alice.world-model:clear-nonpersistent-worldstate)
   (alice.world-model:load-persistent-world-model-data)
@@ -56,16 +55,7 @@
 (defun stop-alice (&optional (msg "Goodbye!"))
   (irc:stop-irc-connection msg))
 
-;; REPL-utils ?
-;; I mean, really, c'mon.
-(defun mute ()
-  (setf *muted* t))
-
-(defun unmute ()
-  (setf *muted* nil))
-
 ;; impersonate function
-
 (defun impersonate-slap (channel user)
   (irc::action alice::*connection* channel (concatenate 'string "slaps " user " with a Shanghai doll.")))
 

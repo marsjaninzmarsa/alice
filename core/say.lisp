@@ -1,5 +1,13 @@
 (in-package :FIXME)
 
+;; REPL-utils ?
+;; I mean, really, c'mon.
+(defun mute ()
+  (setf *muted* t))
+
+(defun unmute ()
+  (setf *muted* nil))
+
 ;; FIXME NOTE REALLY not sure if this file is a good place for it.
 
 (defparameter *throttled-output* nil "A buffer for throttling the output to avoid flooding the channel.")
