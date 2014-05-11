@@ -57,8 +57,8 @@
   (:use #:cl
         #:alexandria)
   (:export #:*default-phrase*
-           #:*answers*
 
+           #:assemble-utterance
            #:extract-words
            #:stem-matches-p
            #:format-date

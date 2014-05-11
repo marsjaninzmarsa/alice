@@ -162,3 +162,15 @@
     (:marisa . ("Marisaaaa?!"
                 "Marisaaa! <3"
                 "*sob*"))))
+
+(defun assemble-utterance (what)
+  ;; FIXME ensure somehow that the end result is *only* either string or a tree of strings.
+  (typecase what
+    (keyword (assemble-utterance (cdr (assoc what alice.language:*answers*))))
+    (list (assemble-utterance (random-elt what)))
+    (string what)
+    (vector (map 'list #'assemble-utterance what))
+
+    (t alice.language:*default-phrase*)
+    (null alice.language:*default-phrase*)))
+

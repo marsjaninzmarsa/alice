@@ -2,7 +2,7 @@
 
 (defparameter *muted* nil)
 
-(defparameter *throttled-output* nil "A buffer for throttling the output to avoid flooding the channel.")
+
 (defparameter *max-output-sequence-length* 4)
 
 (defparameter *full-name* "Alice Margatroid")
@@ -11,100 +11,6 @@
 
 (defvar *uptime-global* (local-time:now))
 (defvar *uptime-message-handler* (local-time:now))
-
-;; functions
-;; tools
-;; FIXME awesome; now let's make it work with multiple independent commands and/or channels
-(defun throttle (messages)
-  (let ((len (length messages)))
-    (if (> len *max-output-sequence-length*)
-        (let* ((split-point (min *max-output-sequence-length*
-                                 len))
-               (to-say (subseq messages 0 split-point))
-               (to-buffer (subseq messages split-point)))
-          (setf *throttled-output* (and (> (length to-buffer) 0) to-buffer))
-          (concatenate 'vector to-say #(:throttled-message))) ;FRAK, this will NOT work with new refactoring
-        (progn
-          (setf *throttled-output* nil)
-          messages))))
-
-;; TODO generalize into a selector that's independend of the medium
-;; TODO handle throttling elsewhere (preferrably per-channel)
-(defun say (to-where what &key to)
-  (unless *muted*
-    (typecase what
-      (null t)
-
-      (keyword (say to-where (cdr (assoc what alice.language:*answers*)) :to to))
-
-      (list (say to-where
-                 (random-elt what)
-                 :to to))
-
-      (string
-       (if (null to)
-           (irc:privmsg *connection* to-where what)
-           (irc:privmsg *connection* to-where (concatenate 'string to ": " what))))
-
-      (vector
-       (let ((tosay (throttle what)))
-         (map 'nil
-              (lambda (msg)
-                (say to-where msg :to to))
-              tosay)))
-
-      (t (irc:privmsg *connection* to-where alice.language:*default-phrase*)))))
-
-;; -----------
-
-;; ↑↑↑↑ THIS GOES TO ? MIND, MAYBE? ↑↑↑↑
-;; FIXME how to make it handle announcing (/me) as well?
-;; esp. if the data is in the "phrase" part?
-(defun say (to-where what &key to)
-  ;; FIXME uness muted?
-  ;; FIXME turn into typecase to catch errors?
-  (let ((utterance (assemble-utterance what))))
-    (if (listp utterance)
-        (mapc (lambda (utt)
-                (irc:say to-where utt :to to))
-              (throttle (alexandria:flatten utterance) to-where))
-        (irc:say to-where utterance :to to)))
-
-;; ↑↑↑↑ THIS GOES TO IRC ↑↑↑↑
-;; IRC say
-(defun say (to-where what &key to)
-  (if to
-      (irc:privmsg *connection* to-where (concatenate 'string to ": " what))
-      (irc:privmsg *connection* to-where what)))
-
-;; ↑↑↑↑ THIS GOES TO WHERE `SAY' GOES ↑↑↑↑
-(defun throttle (messages destination)
-  ;; TODO store it in per-destination dict
-  (let ((len (length messages)))
-    (if (> len *max-output-sequence-length*)
-        (let* ((split-point (min *max-output-sequence-length*
-                                 len))
-               (to-say (subseq messages 0 split-point))
-               (to-buffer (subseq messages split-point)))
-          (setf *throttled-output* (and (> (length to-buffer) 0) to-buffer)) ;FIXME here goes the destination-keyed dict
-          (concatenate 'list to-say (list (assemble-utterance :throttled-message))))
-        (progn
-          (setf *throttled-output* nil)
-          messages))))
-
-;; ↑↑↑↑ THIS GOES TO LANGUAGE/PHRASES ↑↑↑↑
-(defun assemble-utterance (what)
-  ;; FIXME ensure somehow that the end result is *only* either string or a tree of strings.
-  (typecase what
-    (keyword (assemble-utterance (cdr (assoc what alice.language:*answers*))))
-    (list (assemble-utterance (random-elt what)))
-    (string what)
-    (vector (map 'list #'assemble-utterance what))
-
-    (t alice.language:*default-phrase*)
-    (null alice.language:*default-phrase*)))
-
-;; -----------
 
 ;;; utils
 ;; typical of sentence-features utils;

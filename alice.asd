@@ -17,7 +17,7 @@
                (:module "irc"
                         :components ((:file "irc")))
 
-               (:module "mind"
+               (:module "core"
                         :components ((:file "world-model")
                                      (:file "sentence-features")
                                      (:file "emotions")))
