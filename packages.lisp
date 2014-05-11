@@ -72,6 +72,23 @@
            #:format-date
            #:format-time))
 
+(defpackage #:alice.apis
+  (:use #:cl)
+  (:export 
+
+   ;; API functions
+   ;; TODO move from grimoire and list them here.
+
+   ;; enabling functions (for configuration)
+   #:enable-etherpad-api
+   #:enable-facebook-api
+   #:enable-google-calendar-api
+   #:enable-google-search-api
+   #:enable-mailgun-api
+   #:enable-pushbullet-api
+   #:enable-pushover-api
+   #:enable-wolfram-alpha-api))
+
 (defpackage #:alice.grimoire
   (:use #:cl)
   (:export #:*pushover-token*
