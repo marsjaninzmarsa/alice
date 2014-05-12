@@ -1,5 +1,8 @@
 (in-package :FIXME)
 
+(defparameter *max-output-sequence-length* 4)
+(defparameter *muted* nil)
+
 ;; REPL-utils ?
 ;; I mean, really, c'mon.
 (defun mute ()
@@ -18,16 +21,15 @@
 ;; FIXME especially if we want to pass another set of phrases?
 ;; (I guess so, in the end...)
 (defun say (to-where what &key to)
-  ;; FIXME uness muted?
+  (unless *muted*
   ;; FIXME turn into typecase to catch errors?
-  (let ((utterance (assemble-utterance what))))
-    (if (listp utterance)
-        (mapc (lambda (utt)
-                (irc:say to-where utt :to to))
-              (throttle (alexandria:flatten utterance) to-where))
-        (irc:say to-where utterance :to to)))
+    (let ((utterance (assemble-utterance what)))
+      (if (listp utterance)
+          (mapc (lambda (utt)
+                  (irc:say to-where utt :to to))
+                (throttle (alexandria:flatten utterance) to-where))
+          (irc:say to-where utterance :to to)))))
 
-;; ↑↑↑↑ THIS GOES TO WHERE `SAY' GOES ↑↑↑↑
 (defun throttle (messages destination)
   ;; TODO store it in per-destination dict
   (let ((len (length messages)))

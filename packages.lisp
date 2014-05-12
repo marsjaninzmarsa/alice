@@ -91,7 +91,7 @@
 
 (defpackage #:alice.grimoire
   (:use #:cl)
-  (:export #:*pushover-token*
+  (:export #:*pushover-token*           ;NOTE (TODO FIXME) this stuff (constants) goes (hidden) into #alice.apis.
            #:*pushover-admin-user*
            #:*wolfram-app-id*
            #:*mailgun-domain*
