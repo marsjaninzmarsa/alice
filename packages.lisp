@@ -20,7 +20,6 @@
 
            #:start-alice
            #:stop-alice
-           #:impersonate-slap
            #:mute
            #:unmute
            #:say

@@ -4,10 +4,14 @@
 
 ;; entry point
 (defun start-alice (&key (server *server*) (nick *nick*) (password *password*) (channels *autojoin-channels*))
-  (alice.world-model:clear-nonpersistent-worldstate)
-  (alice.world-model:load-persistent-world-model-data)
+  ;; FIXME move those somewhere. I don't think they're part of the
+  ;; "world model"; they either stay here or move to another "central"
+  ;; piece of Alice (one tha doesn't yet exist).
 
-  (alice.irc:start-irc-connection ...)
+  ;; (alice.world-model:clear-nonpersistent-worldstate)
+  ;; (alice.world-model:load-persistent-world-model-data)
+
+  (alice.irc:start-irc-connection ...)  ;TODO
 
   (mapcar (lambda (channel) (alice.world-model:join-channel channel)) channels) ;; <-- ??
 
@@ -20,8 +24,4 @@
 
 (defun stop-alice (&optional (msg "Goodbye!"))
   (irc:stop-irc-connection msg))
-
-;; impersonate function
-(defun impersonate-slap (channel user)
-  (irc::action alice::*connection* channel (concatenate 'string "slaps " user " with a Shanghai doll.")))
 
