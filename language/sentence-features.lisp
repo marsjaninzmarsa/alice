@@ -1,4 +1,4 @@
-(in-package #:alice.sentence-features)
+(in-package #:alice.language)
 
 (defclass sentence-features ()
   ;; sentence-understanding-related

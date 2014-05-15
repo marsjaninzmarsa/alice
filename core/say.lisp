@@ -1,4 +1,4 @@
-(in-package :FIXME)
+(in-package :alice.core)
 
 (defparameter *max-output-sequence-length* 4)
 (defparameter *muted* nil)

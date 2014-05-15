@@ -1,3 +1,3 @@
-(in-package #:alice.emotions)
+(in-package #:alice.core)
 
 ;; TODO

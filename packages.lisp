@@ -112,9 +112,6 @@
            #:make-email-notifier
            #:notify-person))
 
-(defpackage #:alice.sentence-features
-  (:use #:cl))
-
 (defpackage #:alice.emotions
   (:use #:cl))
 
