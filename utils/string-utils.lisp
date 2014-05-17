@@ -1,4 +1,4 @@
-(in-package :alice.string-utils)
+(in-package :alice.utils)
 
 (define-constant +regexp-special-characters+ ".^$*+?()[{\|\\" :test #'string=)
 (define-constant

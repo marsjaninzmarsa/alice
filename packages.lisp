@@ -3,28 +3,10 @@
 (defpackage #:alice
   (:use #:cl
         #:alexandria)
-  (:export #:*connection*
-           #:*server*
-           #:*nick*
-           #:*password*
-           #:*autojoin-channels*
-           #:*muted*
-           #:+nickserv+
-           #:+nickserv-identify-msg-template+
-           #:*max-output-sequence-length*
-           #:*uptime-global*
-           #:*uptime-message-handler*
-           #:*full-name*
-           #:*excluded-from-replying-to*
-           #:*throttled-output*
+  (:export #:*full-name*
 
            #:start-alice
-           #:stop-alice
-           #:mute
-           #:unmute
-           #:say
-           #:mentions
-           #:mentions-regexp))
+           #:stop-alice))
 
 (defpackage #:alice.persistence-utils
   (:use #:cl)
@@ -40,14 +22,14 @@
 (defpackage #:alice.irc
   (:use #:cl)
 
-  (:export #:server
-           #:nick
-           #:password
-           #:autojoin-channels
+  (:export #:*server*
+           #:*nick*
+           #:*password*
+           #:*autojoin-channels*
 
            #:start-irc-connection
            #:stop-irc-connection
-           #:say
+           #:privmsg
            #:action
            #:join-channel
            #:part-channel))
@@ -76,7 +58,9 @@
   (:export 
 
    ;; API functions
-   ;; TODO move from grimoire and list them here.
+   #:mailgun-send-email
+   #:send-pushover-notification
+   #:query-wolfram-alpha
 
    ;; enabling functions (for configuration)
    #:enable-etherpad-api
@@ -90,16 +74,7 @@
 
 (defpackage #:alice.grimoire
   (:use #:cl)
-  (:export #:*pushover-token*           ;NOTE (TODO FIXME) this stuff (constants) goes (hidden) into #alice.apis.
-           #:*pushover-admin-user*
-           #:*wolfram-app-id*
-           #:*mailgun-domain*
-           #:*mailgun-key*
-           #:*url-shortening-regexp*
-           #:*wolfram-query-regexp*
-           #:*user-notification-medium*
-
-           #:do-google-search
+  (:export #:do-google-search
            #:shorten-url
            #:do-wolfram-computation
            #:send-pushover-notification
@@ -110,14 +85,19 @@
            #:notify-via-memo            ;?? should this be exported?
            #:make-pushover-notifier
            #:make-email-notifier
-           #:notify-person))
+           #:notify-person
+           #:uptime-message
+           #:reset-event-handler-uptime
+           #:handle-specials))
 
-(defpackage #:alice.emotions
-  (:use #:cl))
-
-(defpackage #:alice.world-model
+(defpackage #:alice.core
   (:use #:cl)
-  (:export #:clear-nonpersistent-worldstate
+  (:export #:*max-output-sequence-length*
+           #:mute
+           #:unmute
+           #:say
+           
+           #:clear-nonpersistent-worldstate
            #:load-persistent-world-model-data
            #:store-joining-name
            #:store-parting-name
@@ -131,13 +111,15 @@
            #:identify-person-mentioned
            #:identify-person-canonical-name))
 
-(defpackage #:alice.debug
+(defpackage #:alice.utils
   (:use #:cl #:alice)
-  (:nicknames #:aldbg)
   (:export #:get-background-handler-instance
            #:attach-standard-output-to-slime
-           #:detach-standard-output-from-slime))
+           #:detach-standard-output-from-slime
 
-(defpackage #:alice.specials
-  (:use #:cl)
-  (:export #:handle-specials))
+           #:dump-hashtable
+           #:read-back-into-hashtable
+           
+           #:escape-for-regexp
+           #:matches-regexp-p
+           #:extract-words))

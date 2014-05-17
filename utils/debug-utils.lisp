@@ -1,5 +1,4 @@
-(in-package #:alice.debug)
-
+(in-package #:alice.utils)
 
 (defun deconstruct-memo (memo)
   (print memo)
@@ -17,12 +16,6 @@
         (third memo-data)
         (fourth memo-data)
         (local-time:unix-to-timestamp (fifth memo-data))))
-
-;; (defun dump-memos (&key (source-table alice::*memos*) (destination-file "memos.se"))
-;;   (dump-hashtable source-table destination-file :value-deconstructor #'deconstruct-memo))
-
-;; (defun read-back-memos (&key (destination-table alice::*memos*) (source-file "memos.se"))
-;;   (read-back-into-hashtable destination-table source-file :value-constructor #'reconstruct-memo))
 
 (defun get-background-handler-instance ()
   "Get instance of the (CCL) process of the message loop."

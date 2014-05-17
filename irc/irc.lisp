@@ -19,17 +19,9 @@
 
   (irc:privmsg *connection* +nickserv+ (format nil +nickserv-identify-msg-template+ password))
 
-  (mapcar (lambda (channel) (alice.world-model:join-channel channel)) channels) ;FIXME this function definitely goes out of 
+  (mapcar (lambda (channel) (join-channel channel)) channels)
 
-  (irc:add-hook *connection* 'irc:irc-privmsg-message 'msg-hook)
-  (irc:add-hook *connection* 'irc:irc-join-message 'join-hook)
-  (irc:add-hook *connection* 'irc:irc-part-message 'part-hook)
-  (irc:add-hook *connection* 'irc:irc-rpl_namreply-message 'names-hook)
-  (irc:add-hook *connection* 'irc:irc-nick-message 'nick-hook)
-
-  #+(or sbcl
-        openmcl)
-  (irc:start-background-message-handler *connection*))
+  (add-hooks))
 
 (defun stop-irc-connection (&optional (msg "Goodbye!"))
       (irc:quit *connection* msg))
@@ -51,3 +43,17 @@
 (defun part-channel (channel)
   (irc:part *connection* channel))
 
+
+
+(defun add-hooks () 
+  (irc:add-hook *connection* 'irc:irc-privmsg-message 'msg-hook)
+  (irc:add-hook *connection* 'irc:irc-join-message 'join-hook)
+  (irc:add-hook *connection* 'irc:irc-part-message 'part-hook)
+  (irc:add-hook *connection* 'irc:irc-rpl_namreply-message 'names-hook)
+  (irc:add-hook *connection* 'irc:irc-nick-message 'nick-hook))
+
+(defun start-message-handler ()
+  (alice.grimoire:reset-event-handler-update)
+  #+(or sbcl
+        openmcl)
+  (irc:start-background-message-handler *connection*))

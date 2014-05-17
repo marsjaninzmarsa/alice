@@ -1,13 +1,11 @@
 ;;;; Handlers for IRC messages and events.
-
 (in-package #:alice.event-handlers)
-
-;; FIXME at some point this should be separated into multiple files / modules...
 
 (defparameter *excluded-from-replying-to* '("kdbot") "List of users that the bot won't reply to for unrecognized queries.")
 
 ;;; utils
 ;; typical of sentence-features utils;
+;; NOTE they will go there, no worries.
 (defun mentions (what string)
   (search (string-downcase what) (string-downcase string)))
 
@@ -19,6 +17,7 @@
 
 ;; types of message
 ;; these should go to sentence-features, or - as it should be named - message-features; but I guess we might keep the old name for the reason it sounds nicer,
+;; NOTE they will go there, just later.
 (defun public-message-p (message)
   (and
    (not (string-equal *nick* (first (irc:arguments message)))) ; search message
@@ -44,7 +43,7 @@
         (message-body (second (irc:arguments message))))
 
     (alice.grimoire:check-for-memos destination from-who)
-    (alice.specials:handle-specials destination is-private is-public is-directed from-who message-body)
+    (alice.grimoire:handle-specials destination is-private is-public is-directed from-who message-body)
 
     (cond
       ((and is-directed
@@ -56,7 +55,7 @@
                 (mentions "spyta" message-body)
                 (mentions "memo" message-body)))
        (progn (say destination (alice.grimoire:notify-person destination
-                                                             (alice.world-model:identify-person-mentioned message-body)
+                                                             (alice.core:identify-person-mentioned message-body)
                                                              message-body
                                                              from-who
                                                              is-private))))
@@ -234,7 +233,7 @@
               (canonical (third names)))
          (if (and alias canonical)
              (progn
-               (alice.world-model:learn-canonical-name alias canonical)
+               (alice.core:learn-canonical-name alias canonical)
                (say destination (format nil "Zapamiętałam ~A jako ~A." alias canonical)))
              (say destination "You fail at wydawanie poleceń. *sigh*"))))
 
@@ -248,19 +247,19 @@
 (defun irc-join-hook (message)
   (let ((who (irc:source message))
         (where (first (irc:arguments message))))
-    (alice.world-model:store-joining-name where who)))
+    (alice.core:store-joining-name where who)))
 
 (defun irc-part-hook (message)
   (let ((who (irc:source message))
         (where (first (irc:arguments message))))
-    (alice.world-model:store-parting-name where who)))
+    (alice.core:store-parting-name where who)))
 
 (defun irc-names-hook (message)
   (let ((channel (third (irc:arguments message)))
         (nicks (fourth (irc:arguments message))))
-    (alice.world-model:store-names channel (split-sequence:split-sequence #\Space nicks))))
+    (alice.core:store-names channel (split-sequence:split-sequence #\Space nicks))))
 
 (defun irc-nick-hook (message)
   (let ((from (irc:source message))
         (to (first (irc:arguments message))))
-    (alice.world-model:register-nick-change from to)))
+    (alice.core:register-nick-change from to)))

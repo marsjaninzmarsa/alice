@@ -1,9 +1,11 @@
 (in-package #:alice.api)
 
+(defparameter *wolfram-enabled* nil)
 (defparameter *wolfram-app-id* "")
 
-(defun enable-wolfram-alpha-api (app-id)
-  (setf *wolfram-app-id* app-id))
+(defun enable-wolfram-alpha-api (&key app-id)
+  (setf *wolfram-enabled* t
+        *wolfram-app-id* app-id))
 
 (defun query-wolfram-alpha (query)
   "Query Wolfram|Alpha API for `QUERY' and format response as string."
@@ -31,7 +33,10 @@
                  cleaned-up))))
 
     ;; code
+
     (if query
         (or (ignore-errors (clean-up (xml-response-to-speechstrings (get-xml-response query))))
             :failed-in-computing)
         :nothing-to-compute)))
+
+  ;; FIXME move the :symbol-returning parts into grimoire; let API be pure.

@@ -1,6 +1,7 @@
 (in-package :alice.core)
 
 (defparameter *max-output-sequence-length* 4)
+
 (defparameter *muted* nil)
 
 ;; REPL-utils ?
@@ -12,7 +13,7 @@
   (setf *muted* nil))
 
 ;; FIXME NOTE REALLY not sure if this file is a good place for it.
-
+;; NOTE maybe, why not; if we drop the idea of centralizing all the "state" in one place, maybe we can store per-destination throttling in hashtables here.
 (defparameter *throttled-output* nil "A buffer for throttling the output to avoid flooding the channel.")
 
 ;; FIXME how to make it handle announcing (/me) as well?

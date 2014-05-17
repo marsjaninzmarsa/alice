@@ -1,5 +1,5 @@
 ;; A file to separate out special situations
-(in-package :alice.specials)
+(in-package :alice.grimoire)
 
 (defparameter *blueline-answers*
   '("heh"

@@ -3,7 +3,7 @@
 (defparameter *pushover-token* "")
 (defparameter *pushover-admin-user* "")
 
-(defun enable-pushover-api (token admin-user)
+(defun enable-pushover-api (&key token admin-user)
   (setf *pushover-token* token
         *pushover-admin-user* admin-user))
 
