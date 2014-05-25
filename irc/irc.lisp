@@ -9,7 +9,7 @@
 (defparameter *autojoin-channels* '())
 
 (define-constant +nickserv+ "NickServ" :test #'string=)
-(define-constant +nickserv-identify-msg-template+ "IDENTIFY ~a" #'string=)
+(define-constant +nickserv-identify-msg-template+ "IDENTIFY ~a" :test #'string=)
 
 (defun start-irc-connection (&key (server *server*) (nick *nick*) (password *password*) (channels *autojoin-channels*))
   
@@ -53,7 +53,7 @@
   (irc:add-hook *connection* 'irc:irc-nick-message 'nick-hook))
 
 (defun start-message-handler ()
-  (alice.grimoire:reset-event-handler-update)
+  (alice.grimoire:reset-event-handler-uptime)
   #+(or sbcl
         openmcl)
   (irc:start-background-message-handler *connection*))

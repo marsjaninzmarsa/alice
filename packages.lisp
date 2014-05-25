@@ -20,7 +20,8 @@
            #:extract-words))
 
 (defpackage #:alice.irc
-  (:use #:cl)
+  (:use #:cl
+        #:alexandria)
 
   (:export #:*server*
            #:*nick*

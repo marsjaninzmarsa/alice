@@ -32,6 +32,19 @@
                (:module "utils"
                         :components ((:file "persistence-utils")
                                      (:file "debug-utils")))
+
+               (:module "apis"
+                        :components ((:file "etherpad")
+                                     (:file "facebook")
+                                     (:file "google-calendar")
+                                     (:file "google-search")
+                                     (:file "mailgun")
+                                     (:file "pushbullet")
+                                     (:file "pushover")
+                                     (:file "space-missions")
+                                     (:file "tinyurl")
+                                     (:file "wolfram-alpha")))
+
                (:module "grimoire"
                         :components ((:file "google")
                                      (:file "mail")
