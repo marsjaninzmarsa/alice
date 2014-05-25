@@ -166,7 +166,7 @@
 (defun assemble-utterance (what)
   ;; FIXME ensure somehow that the end result is *only* either string or a tree of strings.
   (typecase what
-    (keyword (assemble-utterance (cdr (assoc what alice.language:*answers*))))
+    (keyword (assemble-utterance (cdr (assoc what *answers*))))
     (list (assemble-utterance (random-elt what)))
     (string what)
     (vector (map 'list #'assemble-utterance what))

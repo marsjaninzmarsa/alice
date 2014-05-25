@@ -13,7 +13,7 @@
          (or (equalp lowcase-word-checked lowcase-target)
              (equalp lowcase-word-checked suffixless-target)
              (alice.string-utils:matches-regexp-p (make-stem-regexp lowcase-target) lowcase-word-checked)
-             (alice.string-utisl:matches-regexp-p (make-stem-regexp suffixless-target) lowcase-word-checked)))))
+             (alice.string-utils:matches-regexp-p (make-stem-regexp suffixless-target) lowcase-word-checked)))))
 
 
 (defun make-stem-regexp (base-word)

@@ -1,4 +1,4 @@
-(in-package #:alice.api)
+(in-package #:alice.apis)
 
 (defparameter *wolfram-enabled* nil)
 (defparameter *wolfram-app-id* "")

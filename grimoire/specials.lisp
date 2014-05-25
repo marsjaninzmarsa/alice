@@ -43,7 +43,7 @@
         (incf *consecutive-blueline-msgs*)
         (if (and (> *consecutive-blueline-msgs* *min-blueline-msgs-required*)
                  (= 0 (random 3)))
-            (say destination (random-elt *blueline-answers*))))
+            (alice.core:say destination (random-elt *blueline-answers*))))
       (if (= 0 (random 2)) (setf *consecutive-blueline-msgs* 0))))
 
 (defun handle-marchewa-presentation (destination is-private is-public is-directed from-who message-body)
@@ -54,7 +54,7 @@
 (defun handle-comments (destination is-private is-public is-directed from-who message-body)
   (declare (ignore from-who is-directed is-private))
   (flet ((say-image-macro (destination symbol)
-           (alice:say destination (cdr (assoc symbol *comments-image-macros*)))))
+           (alice.core:say destination (cdr (assoc symbol *comments-image-macros*)))))
     (if is-public
         (cond
           ((and (or (alice:mentions "szynka" message-body)

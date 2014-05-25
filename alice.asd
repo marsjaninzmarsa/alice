@@ -22,12 +22,14 @@
                                      (:file "irc")))
 
                (:module "core"
-                        :components ((:file "world-model")
-                                     (:file "sentence-features")
-                                     (:file "emotions")))
+                        :components ((:file "emotions")
+                                     (:file "say")
+                                     (:file "world-model")))
                (:module "language"
-                        :components ((:file "phrases")
-                                     (:file "language")))
+                        :components ((:file "datetime")
+                                     (:file "phrases")
+                                     (:file "sentence-features")
+                                     (:file "stem-matcher")))
 
                (:module "utils"
                         :components ((:file "persistence-utils")

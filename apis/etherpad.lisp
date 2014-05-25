@@ -1,4 +1,4 @@
-(in-package #:alice.api)
+(in-package #:alice.apis)
 
 ;; TODO
 (defun enable-etherpad-api (key)

@@ -27,9 +27,9 @@
     (let ((utterance (assemble-utterance what)))
       (if (listp utterance)
           (mapc (lambda (utt)
-                  (irc:say to-where utt :to to))
+                  (alice.irc:privmsg to-where utt :to to))
                 (throttle (alexandria:flatten utterance) to-where))
-          (irc:say to-where utterance :to to)))))
+          (alice.irc:privmsg to-where utterance :to to)))))
 
 (defun throttle (messages destination)
   ;; TODO store it in per-destination dict

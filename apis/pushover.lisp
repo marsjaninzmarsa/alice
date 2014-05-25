@@ -1,4 +1,4 @@
-(in-package #:alice.api)
+(in-package #:alice.apis)
 
 (defparameter *pushover-token* "")
 (defparameter *pushover-admin-user* "")

@@ -1,3 +1,3 @@
-(in-package #:alice.api)
+(in-package #:alice.apis)
 
 ;; TODO

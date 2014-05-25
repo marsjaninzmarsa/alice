@@ -82,7 +82,7 @@ Creates the object if not found."
   "Take `MESSAGE-BODY', return canonical name of a first recognized person inside the message."
   (let ((words (alice.language:extract-words message-body))) ;FIXME I don't like this circular module dependency here. `sentence-features' component is based on `world-model'.
     (find-if (lambda (word)
-               (and (not (equalp word alice:*nick*))
+               (and (not (equalp word alice.irc:*nick*))
                     (not (null (identify-person-canonical-name word)))))
              words)))
 

@@ -22,5 +22,5 @@
 
 (defun pick-notifier (channel target-user message-body from-who is-private)
   "Select notification method for given user using provided context."
-  (gethash (alice.world-model:identify-person-canonical-name target-user) *user-notification-medium* #'notify-via-memo))
+  (gethash (alice.core:identify-person-canonical-name target-user) *user-notification-medium* #'notify-via-memo))
 
